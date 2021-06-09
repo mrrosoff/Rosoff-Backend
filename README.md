@@ -1,6 +1,6 @@
 # Rosoff-Dev
 
-### A Portal To Developer Related Tools
+### A Portal For Developer Tools
 
 Built on the Apollo Framework for GraphQL, this project implements a full-featured chess application. Using a schema-first Graph 
 approach, we implement an Apollo Server, with support for services such as authentication, logging, mocking, and testing. Our 

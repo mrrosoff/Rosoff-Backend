@@ -4,7 +4,12 @@ import mongodb from "mongodb";
 
 const { ObjectId } = mongodb;
 
-export const checkIsLoggedIn = async (context) => {
+interface Context {
+	userId: String;
+	db: any;
+}
+
+export const checkIsLoggedIn = async (context: Context) => {
 	if (!context.userId) {
 		throw new AuthenticationError("Must Be Logged In");
 	}
@@ -13,15 +18,17 @@ export const checkIsLoggedIn = async (context) => {
 	}
 };
 
-export const checkIsMe = (parent, context) => {
+export const checkIsMe = (parent: any, context: Context) => {
 	if (!context.userId || parent._id.toString() !== context.userId.toString()) {
 		throw new AuthenticationError("Permissions Invalid For Requested Field");
 	}
 };
 
-export const checkIsContainerOwner = async (context, containerId) => {
-	const userRecord = await context.db.collection("Users").findOne(context.userId);
-	const containerRecord = await context.db.collection("Containers").findOne(ObjectId(containerId));
+export const checkIsContainerOwner = async (context: Context, containerId: string) => {
+	const userRecord: any = await context.db.collection("Users").findOne(context.userId);
+	const containerRecord: any = await context.db
+		.collection("Containers")
+		.findOne(ObjectId(containerId));
 	if (containerRecord.owner !== userRecord.username) {
 		throw new AuthenticationError("Permissions Invalid For Requested Field");
 	}

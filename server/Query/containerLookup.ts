@@ -1,9 +1,9 @@
 import mongodb from "mongodb";
-import { checkIsContainerOwner } from "../utils.js";
+import { checkIsContainerOwner } from "../utils";
 
 const { ObjectId } = mongodb;
 
-const containerLookup = (_, args, context, info) => {
+const containerLookup = (_: any, args: any, context: any, info: any) => {
 	checkIsContainerOwner(context, args._id);
 	return context.db.collection("Containers").findOne({ _id: ObjectId(args._id) });
 };

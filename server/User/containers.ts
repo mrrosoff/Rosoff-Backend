@@ -1,4 +1,4 @@
-import { checkIsMe } from "../utils.js";
+import { checkIsMe } from "../utils";
 
 const containers = async (parent, args, context, info) => {
 	checkIsMe(parent, context);

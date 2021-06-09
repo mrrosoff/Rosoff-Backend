@@ -269,7 +269,7 @@ const NotificationMatchRequests = (props) => {
 							onClick={() =>
 								props.resolveInviteFriend({
 									variables: {
-										matchId: match._id,
+										containerId: match._id,
 										choice: false
 									}
 								})
@@ -281,7 +281,7 @@ const NotificationMatchRequests = (props) => {
 							onClick={() =>
 								props.resolveInviteFriend({
 									variables: {
-										matchId: match._id,
+										containerId: match._id,
 										choice: true
 									}
 								})

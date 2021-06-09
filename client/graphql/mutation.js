@@ -83,14 +83,14 @@ export const CreateMatch = gql`
 
 export const EditMatch = gql`
 	mutation EditMatch(
-		$matchId: ID!
+		$containerId: ID!
 		$gameType: GAME_TYPE
 		$name: String
 		$boardSkin: ID
 		$pieceSkin: ID
 	) {
 		editMatch(
-			matchId: $matchId
+			containerId: $containerId
 			gameType: $gameType
 			name: $name
 			boardSkin: $boardSkin
@@ -112,8 +112,8 @@ export const EditMatch = gql`
 `;
 
 export const InviteFriend = gql`
-	mutation InviteFriend($matchId: ID!, $friendUsername: String!) {
-		inviteFriend(matchId: $matchId, friendUsername: $friendUsername) {
+	mutation InviteFriend($containerId: ID!, $friendUsername: String!) {
+		inviteFriend(containerId: $containerId, friendUsername: $friendUsername) {
 			_id
 			pendingPlayers {
 				username
@@ -124,8 +124,8 @@ export const InviteFriend = gql`
 `;
 
 export const ResolveInviteFriend = gql`
-	mutation ResolveInviteFriend($matchId: ID!, $choice: Boolean!) {
-		resolveInviteFriend(matchId: $matchId, choice: $choice) {
+	mutation ResolveInviteFriend($containerId: ID!, $choice: Boolean!) {
+		resolveInviteFriend(containerId: $containerId, choice: $choice) {
 			_id
 			pendingPlayers {
 				username
@@ -140,8 +140,8 @@ export const ResolveInviteFriend = gql`
 `;
 
 export const DeleteUserFromMatch = gql`
-	mutation DeleteUserFromMatch($matchId: ID!, $friendUsername: String) {
-		deleteUserFromMatch(matchId: $matchId, friendUsername: $friendUsername) {
+	mutation DeleteUserFromMatch($containerId: ID!, $friendUsername: String) {
+		deleteUserFromMatch(containerId: $containerId, friendUsername: $friendUsername) {
 			_id
 			players {
 				username
@@ -152,14 +152,14 @@ export const DeleteUserFromMatch = gql`
 `;
 
 export const DeleteMatch = gql`
-	mutation DeleteMatch($matchId: ID!) {
-		deleteMatch(matchId: $matchId)
+	mutation DeleteMatch($containerId: ID!) {
+		deleteMatch(containerId: $containerId)
 	}
 `;
 
 export const StartMatch = gql`
-	mutation StartMatch($matchId: ID!) {
-		startMatch(matchId: $matchId) {
+	mutation StartMatch($containerId: ID!) {
+		startMatch(containerId: $containerId) {
 			_id
 			inProgress
 		}
@@ -167,8 +167,8 @@ export const StartMatch = gql`
 `;
 
 export const MakeMove = gql`
-	mutation MakeMove($matchId: ID!, $updatedFen: Fen!) {
-		makeMove(matchId: $matchId, updatedFen: $updatedFen) {
+	mutation MakeMove($containerId: ID!, $updatedFen: Fen!) {
+		makeMove(containerId: $containerId, updatedFen: $updatedFen) {
 			_id
 			... on MatchTwoPlayer {
 				fen
@@ -179,8 +179,8 @@ export const MakeMove = gql`
 `;
 
 export const ResolveMatch = gql`
-	mutation ResolveMatch($matchId: ID!, $finalFen: Fen!) {
-		resolveMatch(matchId: $matchId, finalFen: $finalFen) {
+	mutation ResolveMatch($containerId: ID!, $finalFen: Fen!) {
+		resolveMatch(containerId: $containerId, finalFen: $finalFen) {
 			_id
 			matchResults {
 				winner {

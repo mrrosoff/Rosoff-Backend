@@ -11,11 +11,11 @@ import handlebars from "handlebars";
 
 import AppleSignIn from "apple-signin-auth";
 
-import { authenticateHTTPAccessToken, generateAccessToken } from "./auth.js";
-import { client } from "./db.js";
-import mocks from "./mocking.js";
-import { typeDefs, resolvers } from "./schema.js";
-import createUser from "./Mutation/createUser.js";
+import { authenticateHTTPAccessToken, generateAccessToken } from "./auth.ts";
+import { client } from "./db.ts";
+import mocks from "./mocking.ts";
+import { typeDefs, resolvers } from "./schema.ts";
+import createUser from "./Mutation/createUser.ts";
 
 const pubsub = new PubSub();
 

@@ -1,6 +1,6 @@
 import mongodb from "mongodb";
 
-import { checkIsLoggedIn } from "../utils.js";
+import { checkIsLoggedIn } from "../utils";
 
 const { ObjectId } = mongodb;
 

@@ -3,14 +3,27 @@ import CryptoJS from "crypto-js";
 import { UserInputError } from "apollo-server-errors";
 import dotenv from "dotenv";
 
-import { checkIsLoggedIn } from "../utils.js";
-import { removeNullArgs } from "../db.js";
+import { checkIsLoggedIn } from "../utils";
+import { removeNullArgs } from "../db";
 
 dotenv.config();
 
-const editUser = async (_, args, context, info) => {
+interface Args {
+	name?: string;
+	username?: string;
+	avatar?: string;
+	email?: string;
+	password?: string;
+}
+
+interface Context {
+	db: any;
+	userId: string;
+}
+
+const editUser = async (_: any, args: Args, context: Context, info: any) => {
 	await checkIsLoggedIn(context);
-	const nullArgs = removeNullArgs(args);
+	const nullArgs: Args = removeNullArgs(args);
 	if (nullArgs.email) {
 		const userRecord = await context.db.collection("Users").findOne({ email: nullArgs.email });
 		if (userRecord) {
@@ -29,6 +42,9 @@ const editUser = async (_, args, context, info) => {
 		}
 	}
 	if (nullArgs.password) {
+		if (!process.env.PASSWORD_KEY) {
+			throw Error("PASSWORD_KEY Is Not Defined");
+		}
 		nullArgs.password = CryptoJS.AES.encrypt(
 			nullArgs.password,
 			process.env.PASSWORD_KEY
@@ -36,11 +52,7 @@ const editUser = async (_, args, context, info) => {
 	}
 	const modifiedUser = await context.db
 		.collection("Users")
-		.findOneAndUpdate(
-			{ _id: context.userId },
-			{ $set: nullArgs },
-			{ returnDocument: 'after' }
-		);
+		.findOneAndUpdate({ _id: context.userId }, { $set: nullArgs }, { returnDocument: "after" });
 	return modifiedUser.value;
 };
 

@@ -5,12 +5,12 @@ import handlebars from "handlebars";
 
 import dotenv from "dotenv";
 
-import { generateAccessToken } from "../auth.js";
-import { removeNullArgs } from "../db.js";
+import { generateAccessToken } from "../auth";
+import { removeNullArgs } from "../db";
 
 dotenv.config();
 
-const sendResetPasswordEmail = async (_, args, context, info) => {
+const sendResetPasswordEmail = async (_: any, args: any, context: any, info: any) => {
 	const userRecord = await context.db.collection("Users").findOne(removeNullArgs(args));
 	if (!userRecord) return false;
 	let mailTransporter = NodeMailer.createTransport({

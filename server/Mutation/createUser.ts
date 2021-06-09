@@ -9,13 +9,26 @@ import dotenv from "dotenv";
 
 const { ObjectId } = mongodb;
 
-import { generateAccessToken } from "../auth.js";
-import { removeNullArgs } from "../db.js";
+import { generateAccessToken } from "../auth";
+import { removeNullArgs } from "../db";
 
 dotenv.config();
 
-const createUser = async (_, args, context, info) => {
-	const nullArgs = removeNullArgs(args);
+interface Args {
+	name?: string;
+	username?: string;
+	avatar?: string;
+	email?: string;
+	password?: string;
+}
+
+interface Context {
+	db: any;
+	userId: string;
+}
+
+const createUser = async (_: any, args: Args, context: Context, info: any) => {
+	const nullArgs: Args = removeNullArgs(args);
 	const userRecord = await context.db.collection("Users").findOne({ email: nullArgs.email });
 	if (userRecord) {
 		throw new UserInputError("User Already Exists");
@@ -53,7 +66,7 @@ const createUser = async (_, args, context, info) => {
 		items: [ObjectId("6091973e685ad9a5076b5ac1"), ObjectId("609197c0685ad9a5076b5ac2")]
 	};
 	const userId = (await context.db.collection("Users").insertOne(newUser)).insertedId;
-	let mailTransporter = NodeMailer.createTransport({
+	const mailTransporter: any = NodeMailer.createTransport({
 		service: "gmail",
 		auth: {
 			user: process.env.MAIL_USERNAME,

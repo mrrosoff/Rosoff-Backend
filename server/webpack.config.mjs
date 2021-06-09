@@ -11,7 +11,7 @@ import nodeExternals from "webpack-node-externals";
 const output = "../dist";
 
 export default {
-	entry: "./server/index.js",
+	entry: "./server/index.ts",
 	experiments: {
 		topLevelAwait: true
 	},
@@ -20,10 +20,10 @@ export default {
 	module: {
 		rules: [
 			{
-				test: /\.m?js$/,
+				test: /\.?tsx?$/,
 				exclude: /node_modules/,
-				loader: "babel-loader"
-			}
+				use: ["ts-loader", "babel-loader"]
+			},
 		]
 	},
 	output: { filename: "server.js", path: path.join(__dirname, output), publicPath: "" },
@@ -36,7 +36,7 @@ export default {
 			"process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development")
 		})
 	],
-	stats: 'errors-only',
+	stats: "errors-only",
 	target: "node",
 	externalsPresets: { node: true },
 	externals: [nodeExternals()]

@@ -2,19 +2,22 @@ import { OAuth2Client } from "google-auth-library";
 
 import dotenv from "dotenv";
 
-import { generateAccessToken } from "../auth.js";
-import createUser from "./createUser.js";
+import { generateAccessToken } from "../auth";
+import createUser from "./createUser";
 
 dotenv.config();
 
-const googleLogin = async (_, args, context, info) => {
+const googleLogin = async (_: any, args: any, context: any, info: any) => {
 	const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 	const ticket = await client.verifyIdToken({
 		idToken: args.token,
 		audience: process.env.GOOGLE_CLIENT_ID
 	});
-	const { email, picture, name } = ticket.getPayload();
-	const userRecord = await context.db.collection("Users").findOne({ email });
+	const tokenPayload = ticket.getPayload();
+	if (!tokenPayload) {
+		return null;
+	}
+	const userRecord = await context.db.collection("Users").findOne({ email: tokenPayload.email });
 	if (userRecord) {
 		return {
 			token: generateAccessToken(userRecord._id.toString()),
@@ -22,7 +25,12 @@ const googleLogin = async (_, args, context, info) => {
 		};
 	}
 	return {
-		token: await createUser(undefined, { email, avatar: picture, name }, context, undefined),
+		token: await createUser(
+			undefined,
+			{ email: tokenPayload.email, name: tokenPayload.name, avatar: tokenPayload.picture },
+			context,
+			undefined
+		),
 		redirectPath: "/finalize-account"
 	};
 };

@@ -19,32 +19,32 @@ export const NewMatchInvite = gql`
 `;
 
 export const NewMatchPlayer = gql`
-	subscription NewMatchPlayer($matchId: ID!) {
-		newMatchPlayer(matchId: $matchId)
+	subscription NewMatchPlayer($containerId: ID!) {
+		newMatchPlayer(containerId: $containerId)
 	}
 `;
 
 export const DeletedMatchPlayer = gql`
-	subscription DeletedMatchPlayer($matchId: ID!) {
-		deletedMatchPlayer(matchId: $matchId)
+	subscription DeletedMatchPlayer($containerId: ID!) {
+		deletedMatchPlayer(containerId: $containerId)
 	}
 `;
 
 export const DeletedMatch = gql`
-	subscription DeletedMatch($matchId: ID!) {
-		deletedMatch(matchId: $matchId)
+	subscription DeletedMatch($containerId: ID!) {
+		deletedMatch(containerId: $containerId)
 	}
 `;
 
 export const NewMatchInProgress = gql`
-	subscription NewMatchInProgress($matchId: ID!) {
-		newMatchInProgress(matchId: $matchId)
+	subscription NewMatchInProgress($containerId: ID!) {
+		newMatchInProgress(containerId: $containerId)
 	}
 `;
 
 export const NewMatchMove = gql`
-	subscription NewMatchMove($matchId: ID!) {
-		newMatchMove(matchId: $matchId)
+	subscription NewMatchMove($containerId: ID!) {
+		newMatchMove(containerId: $containerId)
 	}
 `;
 

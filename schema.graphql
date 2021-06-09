@@ -1,8 +1,8 @@
 type User {
 	name: String
-	username: String
-	avatar: String
 	email: String!
+	avatar: String
+	username: String
 	password: String
 	containers: [Container!]!
 }
@@ -34,13 +34,13 @@ type Mutation {
 	createUser(email: String!, password: String!, username: String!): AuthorizationToken!
 	loginUser(email: String, username: String, password: String!): AuthorizationToken
 	googleLogin(token: ID!): GoogleLoginReponsePayload
-	editUser(name: String, username: String, avatar: String, email: String, password: String): User!
+	editUser(name: String, email: String, avatar: String, username: String, password: String): User!
 	sendResetPasswordEmail(email: String, username: String): Boolean
 	createContainer: Container!
-	editContainer(matchId: ID!, gameType: GAME_TYPE, name: String, boardSkin: ID, pieceSkin: ID): Container
-	deleteContainer(matchId: ID!): Boolean
+	editContainer(containerId: ID!, name: String): Container
+	deleteContainer(containerId: ID!): Boolean
 }
 
 type Subscription {
-    newContainerLog(_id: ID!): String
+	newContainerLog(_id: ID!): String
 }
