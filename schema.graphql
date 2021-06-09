@@ -1,0 +1,53 @@
+type User {
+	name: String
+	username: String
+	avatar: String
+	email: String!
+	password: String
+	containers: [Container!]!
+}
+
+type Container {
+	_id: ID!
+	name: String
+	createdAt: String
+	status: Status
+	address: String
+	privateKey: String
+	logs: String
+}
+
+type GoogleLoginReponsePayload {
+	token: AuthorizationToken
+	redirectPath: String
+}
+
+type MessagePayload {
+	_id: ID!
+	date: DateTime!
+	message: String!
+	from: String!
+}
+
+scalar DateTime
+scalar AuthorizationToken
+
+type Query {
+	selfLookup: User
+	containerLookup(_id: ID!): Match
+}
+
+type Mutation {
+	createUser(email: String!, password: String!, username: String!): AuthorizationToken!
+	loginUser(email: String, username: String, password: String!): AuthorizationToken
+	googleLogin(token: ID!): GoogleLoginReponsePayload
+	editUser(name: String, username: String, avatar: String, email: String, password: String): User!
+	sendResetPasswordEmail(email: String, username: String): Boolean
+	createContainer: Match!
+	editContainer(matchId: ID!, gameType: GAME_TYPE, name: String, boardSkin: ID, pieceSkin: ID): Match
+	deleteContainer(matchId: ID!): Boolean
+}
+
+type Subscription {
+    newContainerLog(_id: ID!): String
+}
