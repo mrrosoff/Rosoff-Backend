@@ -8,8 +8,6 @@ import NavigateNextOutlinedIcon from '@material-ui/icons/NavigateNextOutlined';
 import {useQuery} from "@apollo/client";
 import {GetContainersOverview} from "../../../graphql/query";
 
-import {AuthContext} from "../../Router";
-
 const Containers = props =>
 {
 	let authData = useContext(AuthContext);

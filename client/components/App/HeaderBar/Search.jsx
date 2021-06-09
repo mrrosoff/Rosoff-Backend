@@ -30,7 +30,6 @@ import CheckIcon from "@material-ui/icons/Check";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { GetInfoFromSearch } from "../../../graphql/query.js";
 import { RequestFriend } from "../../../graphql/mutation.js";
-import Chess from "chess.js";
 
 const Search = (props) => {
 	const [searchText, setSearchText] = useState("");

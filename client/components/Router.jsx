@@ -10,18 +10,12 @@ import ForgotPassword from "./Login/ForgotPassword.jsx";
 import AppLayout from "./App/AppLayout.jsx";
 
 import DashBoard from "./App/Pages/Dashboard.jsx";
-import Matches from "./App/Pages/Matches.jsx";
-import Match from "./App/Match/Match.jsx";
-import BattlePass from "./App/Pages/BattlePass.jsx";
-import Collection from "./App/Pages/Collection.jsx";
-import Shop from "./App/Pages/Shop.jsx";
+import Containers from "./App/Pages/Containers.jsx";
+import Container from "./App/Container/Container.jsx";
 
 import Profile from "./App/Pages/Profile.jsx";
 import NotFound from "./NotFound.jsx";
 import FinalizeAccount from "./Login/FinalizeAccount.jsx";
-
-import { useQuery } from "@apollo/client";
-import { GetHeaderProfile } from "./../graphql/query.js";
 
 const Router = (props) => {
 	return (
@@ -95,32 +89,12 @@ const AppRoutes = (props) => {
 					<Profile />
 				</AppLayout>
 			</FilterRoutes>
-			<FilterRoutes path={`${path}/match-history`}>
-				<AppLayout>
-					<Profile />
-				</AppLayout>
-			</FilterRoutes>
 			<FilterRoutes path={`${path}/dashboard`}>
 				<AppLayout>
 					<DashBoard />
 				</AppLayout>
 			</FilterRoutes>
-			<MatchRoutes path={`${path}/matches`} />
-			<FilterRoutes path={`${path}/battle-pass`}>
-				<AppLayout>
-					<BattlePass />
-				</AppLayout>
-			</FilterRoutes>
-			<FilterRoutes path={`${path}/collection`}>
-				<AppLayout>
-					<Collection />
-				</AppLayout>
-			</FilterRoutes>
-			<FilterRoutes path={`${path}/shop`}>
-				<AppLayout>
-					<Shop />
-				</AppLayout>
-			</FilterRoutes>
+			<ContainerRoutes path={`${path}/containers`} />
 			<Route path={"*"}>
 				<NotFound />
 			</Route>
@@ -128,18 +102,18 @@ const AppRoutes = (props) => {
 	);
 };
 
-const MatchRoutes = (props) => {
+const ContainerRoutes = (props) => {
 	return (
 		<Route path={props.path}>
 			<Switch>
 				<Route exact path={props.path}>
 					<AppLayout>
-						<Matches {...props} />
+						<Containers {...props} />
 					</AppLayout>
 				</Route>
-				<Route path={`${props.path}/:matchId`}>
+				<Route path={`${props.path}/:containerId`}>
 					<AppLayout>
-						<Match {...props} />
+						<Container {...props} />
 					</AppLayout>
 				</Route>
 			</Switch>

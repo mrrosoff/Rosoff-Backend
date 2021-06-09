@@ -49,8 +49,6 @@ import {
 } from "../../../graphql/query.js";
 import { CreateMatch } from "../../../graphql/mutation.js";
 
-import Chess from "chess.js";
-
 const useStyles = makeStyles((theme) => ({
 	hoverPaper: {
 		cursor: "pointer",
