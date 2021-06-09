@@ -46,7 +46,7 @@ const App = () => {
 	);
 };
 
-const FullApp = (props) => {
+const FullApp = (props: any) => {
 	const providerRef = useRef();
 
 	const httpLink = new HttpLink({
@@ -127,7 +127,7 @@ const FullApp = (props) => {
 	);
 };
 
-const MobileApp = (props) => {
+const MobileApp = (props: any) => {
 	return (
 		<Box>
 			<Typography>Go To Desktop To See App</Typography>

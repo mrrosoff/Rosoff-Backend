@@ -4,7 +4,7 @@ import { Grid, Typography } from "@material-ui/core";
 
 import Logo from "./UI/Logo.jsx";
 
-const NotFound = (props) => {
+const NotFound = (props: any) => {
 	return (
 		<Grid
 			container
@@ -56,7 +56,7 @@ const NotFound = (props) => {
 	);
 };
 
-const BackToSignInArea = (props) => {
+const BackToSignInArea = (props: any) => {
 	return (
 		<Grid
 			container

@@ -17,7 +17,7 @@ import Profile from "./App/Pages/Profile.jsx";
 import NotFound from "./NotFound.jsx";
 import FinalizeAccount from "./Login/FinalizeAccount.jsx";
 
-const Router = (props) => {
+const Router = (props: any) => {
 	return (
 		<BrowserRouter>
 			<Routes />
@@ -25,7 +25,7 @@ const Router = (props) => {
 	);
 };
 
-const Routes = (props) => {
+const Routes = (props: any) => {
 	return (
 		<Switch>
 			<Route exact path={"/"}>
@@ -57,7 +57,7 @@ const Routes = (props) => {
 	);
 };
 
-const ForgotPasswordRoutes = (props) => {
+const ForgotPasswordRoutes = (props: any) => {
 	const { path } = useRouteMatch();
 	return (
 		<Route path={props.path}>
@@ -77,7 +77,7 @@ const ForgotPasswordRoutes = (props) => {
 	);
 };
 
-const AppRoutes = (props) => {
+const AppRoutes = (props: any) => {
 	const { path } = useRouteMatch();
 	return (
 		<Switch>
@@ -102,7 +102,7 @@ const AppRoutes = (props) => {
 	);
 };
 
-const ContainerRoutes = (props) => {
+const ContainerRoutes = (props: any) => {
 	return (
 		<Route path={props.path}>
 			<Switch>
@@ -121,7 +121,7 @@ const ContainerRoutes = (props) => {
 	);
 };
 
-const FilterRoutes = (props) => {
+const FilterRoutes = (props: any) => {
 	return (
 		<Route path={props.path}>
 			<Switch>
@@ -136,7 +136,7 @@ const FilterRoutes = (props) => {
 	);
 };
 
-const ProtectedRoute = (props) => {
+const ProtectedRoute = (props: any) => {
 	return (
 		<Route {...props}>
 			{localStorage.getItem("token") ? (
