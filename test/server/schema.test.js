@@ -21,13 +21,7 @@ describe("schema.js", () => {
 		});
 		it("should have other properties", () => {
 			resolvers.should.have.property("User");
-			resolvers.should.have.property("PlayerStatistics");
-			resolvers.should.have.property("BattlePass");
-			resolvers.should.have.property("Match");
-			resolvers.should.have.property("MatchTwoPlayer");
-			resolvers.should.have.property("MatchFourPlayer");
-			resolvers.should.have.property("MatchResults");
-			resolvers.should.have.property("Message");
+			resolvers.should.have.property("Container");
 		});
 	});
 });

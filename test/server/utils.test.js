@@ -2,13 +2,7 @@ import chai from "chai";
 
 chai.should();
 
-import {
-	checkIsLoggedIn,
-	checkIsMatchOwner,
-	checkIsMe,
-	checkInMyFriends,
-	checkInTheirFriends
-} from "../../server/utils.js";
+import { checkIsLoggedIn, checkIsMe, checkIsContainerOwner } from "../../server/utils.js";
 
 describe("utils.js", () => {
 	describe("checkIsLoggedIn", () => {
@@ -16,24 +10,14 @@ describe("utils.js", () => {
 			checkIsLoggedIn.should.be.a("function");
 		});
 	});
-	describe("checkIsMatchOwner", () => {
-		it("should be an object", () => {
-			checkIsMatchOwner.should.be.a("function");
-		});
-	});
 	describe("checkIsMe", () => {
 		it("should be an object", () => {
 			checkIsMe.should.be.a("function");
 		});
 	});
-	describe("checkInMyFriends", () => {
+	describe("checkIsContainerOwner", () => {
 		it("should be an object", () => {
-			checkInMyFriends.should.be.a("function");
-		});
-	});
-	describe("checkInTheirFriends", () => {
-		it("should be an object", () => {
-			checkInTheirFriends.should.be.a("function");
+			checkIsContainerOwner.should.be.a("function");
 		});
 	});
 });

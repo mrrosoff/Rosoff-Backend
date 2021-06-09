@@ -13,14 +13,16 @@ export const checkIsLoggedIn = async (context) => {
 	}
 };
 
-export const checkIsContainerOwner = async (context, matchId) => {
-	const userRecord = await context.db.collection("Users").findOne(context.userId);
-	const matchRecord = await context.db.collection("Matches").findOne(ObjectId(matchId));
-	return matchRecord.players[0] === userRecord.username;
-};
-
 export const checkIsMe = (parent, context) => {
 	if (!context.userId || parent._id.toString() !== context.userId.toString()) {
+		throw new AuthenticationError("Permissions Invalid For Requested Field");
+	}
+};
+
+export const checkIsContainerOwner = async (context, containerId) => {
+	const userRecord = await context.db.collection("Users").findOne(context.userId);
+	const containerRecord = await context.db.collection("Containers").findOne(ObjectId(containerId));
+	if (containerRecord.owner !== userRecord.username) {
 		throw new AuthenticationError("Permissions Invalid For Requested Field");
 	}
 };

@@ -10,8 +10,8 @@ type User {
 type Container {
 	_id: ID!
 	name: String
-	createdAt: String
-	status: Status
+	createdAt: DateTime
+	status: String
 	address: String
 	privateKey: String
 	logs: String
@@ -22,19 +22,12 @@ type GoogleLoginReponsePayload {
 	redirectPath: String
 }
 
-type MessagePayload {
-	_id: ID!
-	date: DateTime!
-	message: String!
-	from: String!
-}
-
 scalar DateTime
 scalar AuthorizationToken
 
 type Query {
 	selfLookup: User
-	containerLookup(_id: ID!): Match
+	containerLookup(_id: ID!): Container
 }
 
 type Mutation {
@@ -43,8 +36,8 @@ type Mutation {
 	googleLogin(token: ID!): GoogleLoginReponsePayload
 	editUser(name: String, username: String, avatar: String, email: String, password: String): User!
 	sendResetPasswordEmail(email: String, username: String): Boolean
-	createContainer: Match!
-	editContainer(matchId: ID!, gameType: GAME_TYPE, name: String, boardSkin: ID, pieceSkin: ID): Match
+	createContainer: Container!
+	editContainer(matchId: ID!, gameType: GAME_TYPE, name: String, boardSkin: ID, pieceSkin: ID): Container
 	deleteContainer(matchId: ID!): Boolean
 }
 

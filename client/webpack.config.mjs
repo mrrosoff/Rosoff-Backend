@@ -8,7 +8,7 @@ import webpack from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import CopyPlugin from "copy-webpack-plugin";
 
-const output = "../dist";
+const output = "../dist/website";
 
 export default {
 	entry: "./client/index.jsx",
