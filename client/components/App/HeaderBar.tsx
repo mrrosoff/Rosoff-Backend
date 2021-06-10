@@ -1,11 +1,9 @@
 import { useRef, useState } from "react";
 
-import { Box, Grid, IconButton } from "@material-ui/core";
-import ForumIcon from "@material-ui/icons/Forum";
+import { Box, Grid } from "@material-ui/core";
 
 import Logo from "../UI/Logo.jsx";
 import Search from "./HeaderBar/Search.jsx";
-import Missions from "./HeaderBar/Missions.jsx";
 import Notifications from "./HeaderBar/Notifications.jsx";
 import Profile from "./HeaderBar/Profile.jsx";
 
@@ -48,23 +46,11 @@ const ActionButtons = (props) => {
 
 	return (
 		<Box ref={anchorRef} p={2} display={"flex"} flexWrap={"nowrap"} style={{ height: "100%" }}>
-			<Messages {...props} />
-			<Missions anchorRef={anchorRef} openDropdown={openDropdown} handleOpen={handleOpen} />
 			<Notifications
 				anchorRef={anchorRef}
 				openDropdown={openDropdown}
 				handleOpen={handleOpen}
 			/>
-		</Box>
-	);
-};
-
-const Messages = (props) => {
-	return (
-		<Box pr={1}>
-			<IconButton onClick={() => props.setOpenMessages(!props.openMessages)}>
-				<ForumIcon />
-			</IconButton>
 		</Box>
 	);
 };
