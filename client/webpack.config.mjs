@@ -11,7 +11,7 @@ import CopyPlugin from "copy-webpack-plugin";
 const output = "../dist/website";
 
 export default {
-	entry: "./client/index.jsx",
+	entry: "./client/index.tsx",
 	devServer: {
 		contentBase: path.resolve(__dirname, output),
 		port: 3000,

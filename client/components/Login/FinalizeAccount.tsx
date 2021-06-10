@@ -10,7 +10,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import clsx from "clsx";
 
 import { useMutation, useQuery } from "@apollo/client";
-import { GetHeaderProfile } from ".//../../graphql/query.js";
+import { GetHeaderProfile } from "../../graphql/query.js";
 import { EditUser } from "../../graphql/mutation.js";
 
 import { SignInButton } from "../UI/Buttons.jsx";

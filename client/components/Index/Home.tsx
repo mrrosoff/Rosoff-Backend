@@ -1,25 +1,11 @@
-import { useRef, useState } from "react";
-
 import { Link } from "react-router-dom";
 
-import {
-	Box,
-	ClickAwayListener,
-	Grow,
-	List,
-	ListItem,
-	Popper,
-	Typography
-} from "@material-ui/core";
-import GetAppIcon from "@material-ui/icons/GetApp";
+import { Box } from "@material-ui/core";
 
-import { useSnackbar } from "notistack";
+import NavBar from "./NavBar";
+import { HomePageLargeButton } from "../UI/Buttons";
 
-import NavBar from "./NavBar.jsx";
-
-import { HomePageLargeButton } from "../UI/Buttons.jsx";
-
-const Home = (props) => {
+const Home = (props: any) => {
 	return (
 		<Box width={"100vw"} height={"100vh"}>
 			<Box width={"100%"} height={"100%"}>
@@ -45,27 +31,9 @@ const Home = (props) => {
 	);
 };
 
-const AppOptions = (props) => {
-	const getOS = () => {
-		const platform = window.navigator.platform;
-		const macosPlatforms = ["Macintosh", "MacIntel", "MacPPC", "Mac68K"];
-		const windowsPlatforms = ["Win32", "Win64", "Windows", "WinCE"];
-
-		if (macosPlatforms.indexOf(platform) !== -1) {
-			return "MacOS";
-		} else if (windowsPlatforms.indexOf(platform) !== -1) {
-			return "Windows";
-		} else if (/Linux/.test(platform)) {
-			return "Linux";
-		}
-		return null;
-	};
-
+const AppOptions = (props: any) => {
 	return (
 		<Box flexGrow={1} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-			<Box pr={4}>
-				<ElectronButton operatingSystem={getOS()} />
-			</Box>
 			<Box pl={4}>
 				<Link to={"/login"}>
 					<HomePageLargeButton>Open In Browser</HomePageLargeButton>
@@ -75,116 +43,7 @@ const AppOptions = (props) => {
 	);
 };
 
-const ElectronButton = (props) => {
-	const [open, setOpen] = useState(false);
-	const anchorRef = useRef(null);
-
-	const { enqueueSnackbar } = useSnackbar();
-
-	const downloadClient = (operatingSystem) => {
-		const repoUrl = "https://github.com/M3tanym/Kings-Corner";
-		const windowsUrl = repoUrl + "/releases/latest/download/kings-corner.exe";
-		const macOSUrl = repoUrl + "/releases/latest/download/kings-corner.dmg";
-		switch (operatingSystem) {
-			case "Windows":
-				doDownload(windowsUrl);
-				break;
-			case "MacOS":
-				doDownload(macOSUrl);
-				break;
-			default:
-				enqueueSnackbar("Unspecified Platform", "error");
-		}
-	};
-
-	const doDownload = (link) => {
-		let a = document.createElement("a");
-		a.href = link;
-		a.download = link.substring(link.indexOf("download/") + 1);
-		document.body.appendChild(a);
-		a.click();
-		setTimeout(() => document.body.removeChild(a), 0);
-	};
-
-	return (
-		<Box ref={anchorRef}>
-			<HomePageLargeButton
-				onClick={() => {
-					if (props.operatingSystem === "Linux") setOpen(true);
-					else downloadClient(props.operatingSystem);
-				}}
-			>
-				<Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
-					<GetAppIcon style={{ paddingTop: 2, marginRight: 10 }} />
-					{"Download For " + props.operatingSystem}
-				</Box>
-			</HomePageLargeButton>
-			<ElectronDropDown
-				open={open}
-				setOpen={setOpen}
-				anchorRef={anchorRef}
-				downloadClient={downloadClient}
-				{...props}
-			/>
-		</Box>
-	);
-};
-
-const ElectronDropDown = (props) => {
-	const handleClose = (event) => {
-		if (props.anchorRef.current && props.anchorRef.current.contains(event.target)) return;
-		props.setOpen(false);
-	};
-
-	return (
-		<Popper open={props.open} anchorEl={props.anchorRef.current} transition>
-			{({ TransitionProps, placement }) => (
-				<Grow
-					{...TransitionProps}
-					style={{
-						transformOrigin: placement === "bottom" ? "center top" : "center bottom"
-					}}
-				>
-					<Box
-						width={275}
-						height={150}
-						bgcolor={"#FAFAFA"}
-						boxShadow={1}
-						borderTop={0}
-						borderRadius={10}
-					>
-						<ClickAwayListener onClickAway={handleClose}>
-							<Box p={1}>
-								<List>
-									<ListItem
-										button
-										onClick={() => props.downloadClient(props.operatingSystem)}
-									>
-										<Typography variant={"body1"}>.deb</Typography>
-									</ListItem>
-									<ListItem
-										button
-										onClick={() => props.downloadClient(props.operatingSystem)}
-									>
-										<Typography variant={"body1"}>.rpm</Typography>
-									</ListItem>
-									<ListItem
-										button
-										onClick={() => props.downloadClient(props.operatingSystem)}
-									>
-										<Typography variant={"body1"}>tar.gz</Typography>
-									</ListItem>
-								</List>
-							</Box>
-						</ClickAwayListener>
-					</Box>
-				</Grow>
-			)}
-		</Popper>
-	);
-};
-
-const WaveDivider = (props) => {
+const WaveDivider = (props: any) => {
 	return (
 		<Box
 			color={"neutral.mediumDark"}

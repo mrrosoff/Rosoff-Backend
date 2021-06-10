@@ -6,12 +6,12 @@ import { gql } from "apollo-server-express";
 const schema: any = [fs.readFileSync(path.join(__dirname, "../schema.graphql"), "utf8")];
 const typeDefs: any = gql(schema);
 
-import * as query from "./Query";
-import * as mutation from "./Mutation";
-import * as subscription from "./Subscription";
+import query from "./Query";
+import mutation from "./Mutation";
+import subscription from "./Subscription";
 
-import * as user from "./User";
-import * as container from "./Container";
+import user from "./User";
+import container from "./Container";
 
 const resolvers = {
 	Query: query,

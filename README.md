@@ -2,22 +2,15 @@
 
 ### A Portal For Developer Tools
 
-Built on the Apollo Framework for GraphQL, this project implements a full-featured chess application. Using a schema-first Graph 
-approach, we implement an Apollo Server, with support for services such as authentication, logging, mocking, and testing. Our 
-frontend is React based Apollo Client, utilizing hooks and new technology such as Webpack v5 and Rome for linting.
+Built on the Apollo Framework for GraphQL, this project implements a portal for several developer tools. Using a schema-first Graph approach, we implement an Apollo Server, with support for services such as authentication, logging, mocking, and testing. Our frontend is React based Apollo Client, utilizing hooks and new technology such as Webpack v5 and Typescript.
 
 ## Frontend
 
-Built on the Apollo Framework, the frontend uses a React based client utilizing new hooks inside of function components. 
-Combined with the beauty of GraphQL, this allows us to construct a beautiful, easy to use interface. We support a myriad of 
-features to attempt feature parity with current chess app implementations. Move validation and construction, saved game states 
-and history. We also support a full featured ranking system, shop, and customizable game elements including purchasable piece 
-and board skins.
+Built on the Apollo Framework, the frontend uses a React based client utilizing new hooks inside of function components. Combined with the beauty of GraphQL, this allows us to construct a beautiful, easy to use interface. We support a myriad of features to including the ability to spin up containers, similar to Amazon EC2. These containers support on demand customization of specs, such as vCPUs, vGPUs, RAM, and storage. We also support live on demand log tracing, and configurable routing.
 
 ## Backend
 
-Again built on the Apollo Framework, the backend uses an Apollo Server built on Express. We use ES6 syntax throughout the server 
-to match the frontend.
+Again built on the Apollo Framework, the backend uses an Apollo Server built on Express. We use ES6 syntax throughout the server to match the frontend.
 
 ## Installation
 
@@ -47,14 +40,6 @@ To start and test with the mock server, use the following command. The mock serv
 npm run mockServer
 ```
 
-#### Electron
-
-To run the Electron client instead of the web client, use the following command. Electron support is still a work in progress, please create an issue if you find any.
-
-```bash
-npm run startElectron
-```
-
 #### Docker
 
 To run the application in a container, a Dockerfile is provided. The Dockerfile assumes you have already run the following commands in your terminal.
@@ -65,10 +50,4 @@ npm run buildServer
 npm run buildWebsite
 ```
 
-The image can then be run by Docker. If you would like the built image for your purposes, without modification, you can pull it from [here](https://github.com/orgs/Meta-Games-Biz/packages/container/package/kings-corner).
-
-Or use the following command.
-
-```bash
-docker pull ghcr.io/meta-games-biz/kings-corner:latest
-```
+The image can then be run by Docker.

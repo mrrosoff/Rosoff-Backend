@@ -56,7 +56,7 @@ const ForgotPasswordEntry = (props) => {
 	const [alertText, setAlertText] = useState("");
 
 	useEffect(() => {
-		setTimeout(() => setShowLoginFailedAlert(false), 10000);
+		setTimeout(() => setAlertText(""), 10000);
 	}, [alertText]);
 
 	return (
@@ -151,7 +151,7 @@ const ForgotPasswordArea = (props) => {
 			/>
 			<Box className={classes.sectionPadding}>
 				<SignInButton
-					onClick={() => sendResetPasswordEmailMutation(idField)}
+					onClick={() => sendResetPasswordEmailMutation()}
 					disabled={loading}
 					loading={loading}
 				>
