@@ -1,12 +1,4 @@
 {
 	"presets": ["@babel/preset-typescript", "@babel/preset-env"],
-	"plugins": [
-		[
-			"wildcard",
-			{
-				"useCamelCase": true
-			}
-		],
-		"@babel/transform-runtime"
-	]
+	"plugins": ["@babel/transform-runtime"]
 }
