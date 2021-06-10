@@ -1,11 +1,11 @@
 import { withFilter } from "apollo-server-express";
 
 const newMessage = {
-	resolve: (payload, args, context) => {
+	resolve: (payload: any, args: any, context: any) => {
 		return payload.message;
 	},
 	subscribe: withFilter(
-		(_, args, context, info) => context.pubsub.asyncIterator("NEW_MESSAGE"),
+		(_: any, args: any, context: any, info: any) => context.pubsub.asyncIterator("NEW_MESSAGE"),
 		(payload, args, context, info) => {
 			return payload._id.toString() === context.userId.toString();
 		}

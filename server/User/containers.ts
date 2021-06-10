@@ -1,6 +1,6 @@
 import { checkIsMe } from "../utils";
 
-const containers = async (parent, args, context, info) => {
+const containers = async (parent: any, args: any, context: any, info: any) => {
 	checkIsMe(parent, context);
 	return context.db
 		.collection("Containers")

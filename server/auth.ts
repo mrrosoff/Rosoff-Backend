@@ -9,21 +9,21 @@ const { ObjectId } = mongodb;
 
 dotenv.config();
 
-export const generateAccessToken = (id: string) => {
+export const generateAccessToken = (id: string): any => {
 	if (!process.env.AUTH_KEY) {
 		throw Error("AUTH_KEY Is Not Defined");
 	}
 	return jwt.sign({ id }, process.env.AUTH_KEY);
 };
 
-export const decryptAccessToken = (token: string) => {
+export const decryptAccessToken = (token: string): any => {
 	if (!process.env.AUTH_KEY) {
 		throw Error("AUTH_KEY Is Not Defined");
 	}
 	return jwt.verify(token, process.env.AUTH_KEY);
 };
 
-export const authenticateHTTPAccessToken = (req: any) => {
+export const authenticateHTTPAccessToken = (req: any): any => {
 	const authHeader = req.headers.authorization;
 	if (!authHeader) return null;
 
@@ -31,7 +31,7 @@ export const authenticateHTTPAccessToken = (req: any) => {
 	if (!token) throw new AuthenticationError("Authentication Token Not Specified");
 
 	try {
-		return ObjectId(decryptAccessToken(token).id);
+		return new ObjectId(decryptAccessToken(token).id);
 	} catch (err) {
 		throw new AuthenticationError("Invalid Authentication Token");
 	}

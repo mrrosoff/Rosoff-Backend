@@ -37,7 +37,12 @@ export default {
 			{
 				test: /\.?tsx?$/,
 				exclude: /node_modules/,
-				use: ["ts-loader", "babel-loader"]
+				use: [{ loader: "ts-loader", options: { onlyCompileBundledFiles: true } }]
+			},
+			{
+				test: /\.?jsx?$/,
+				exclude: /node_modules/,
+				use: [{ loader: "babel-loader" }]
 			},
 			{ test: /\.css$/i, use: ["style-loader", "css-loader"] },
 			{
@@ -56,7 +61,7 @@ export default {
 			},
 			{
 				test: /\.(woff|woff2|eot|ttf|otf|png|svg|jpe?g|gif|mp4|wav|mp3)$/i,
-				loader: "file-loader"
+				use: [{ loader: "file-loader" }]
 			}
 		]
 	},
@@ -78,5 +83,8 @@ export default {
 			"process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development")
 		})
 	],
+	resolve: {
+		extensions: ["", ".ts", ".tsx", ".js", ".jsx"]
+	},
 	stats: "minimal"
 };

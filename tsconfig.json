@@ -6,6 +6,7 @@
 		"lib": ["DOM", "esnext"],
 		"module": "esnext",
 		"outDir": "dist",
+		"skipLibCheck": true,
 		"sourceMap": true,
 		"target": "esnext",
 		"strict": true,
@@ -16,5 +17,5 @@
 		"noImplicitThis": false,
 		"resolveJsonModule": true
 	},
-	"exclude": ["coverage", "dist", "node_modules", "test"]
+	"exclude": ["dist"]
 }

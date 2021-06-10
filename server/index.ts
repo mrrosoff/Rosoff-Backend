@@ -1,4 +1,4 @@
-import express from "express";
+import express, { RequestHandler } from "express";
 import http from "http";
 
 import { ApolloServer, PubSub, AuthenticationError } from "apollo-server-express";
@@ -11,11 +11,11 @@ import handlebars from "handlebars";
 
 import AppleSignIn from "apple-signin-auth";
 
-import { authenticateHTTPAccessToken, generateAccessToken } from "./auth.ts";
-import { client } from "./db.ts";
-import mocks from "./mocking.ts";
-import { typeDefs, resolvers } from "./schema.ts";
-import createUser from "./Mutation/createUser.ts";
+import { authenticateHTTPAccessToken, generateAccessToken } from "./auth";
+import { client } from "./db";
+import mocks from "./mocking";
+import { typeDefs, resolvers } from "./schema";
+import createUser from "./Mutation/createUser";
 
 const pubsub = new PubSub();
 
@@ -33,6 +33,9 @@ const server = new ApolloServer({
 	mocks: serverMocks,
 	tracing: serverTracing,
 	formatError: (err) => {
+		if (!err.extensions) {
+			throw Error("Extensions Object Does Not Exist On Error");
+		}
 		if (err.extensions.code === "INTERNAL_SERVER_ERROR") {
 			if (err.extensions) console.error(`${err.extensions.code}: ${err.message}`);
 			else console.error(err);
@@ -40,6 +43,9 @@ const server = new ApolloServer({
 		return err;
 	},
 	context: async ({ req, connection }) => {
+		if (!connection) {
+			throw Error("Connection Object Is Undefined");
+		}
 		return {
 			userId: req ? authenticateHTTPAccessToken(req) : connection.context.userId,
 			db: client.db("Kings-Corner"),
@@ -47,7 +53,7 @@ const server = new ApolloServer({
 		};
 	},
 	subscriptions: {
-		onConnect: (connectionParams) => {
+		onConnect: (connectionParams: any) => {
 			if (!connectionParams.authorization)
 				throw new AuthenticationError(
 					"Authentication Token Must Be Provided For Subscriptions"
@@ -62,8 +68,8 @@ const server = new ApolloServer({
 server.start();
 server.applyMiddleware({ app });
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json() as RequestHandler);
+app.use(express.urlencoded({ extended: true }) as RequestHandler);
 
 app.post("/apple-login", async (req, res) => {
 	if (!req.body || !req.body.id_token) return res.sendFile(__dirname + "/website/index.html");

@@ -20,8 +20,6 @@ import {
 } from "@material-ui/core";
 import NavigateNextOutlinedIcon from "@material-ui/icons/NavigateNextOutlined";
 
-import MaskedInput from "react-text-mask";
-
 import { useQuery } from "@apollo/client";
 import { GetMatchHistory, GetTraditionalProfile } from "../../../graphql/query.js";
 
@@ -85,7 +83,6 @@ const EditUserInfo = (props) => {
 		<Paper>
 			<Box p={4} display={"flex"} flexDirection={"column"}>
 				<Field name={"Email"} input={<TextField />} />
-				<Field mt={2} name={"Phone Number"} input={<PhoneNumberInput />} />
 				<Field mt={2} name={"Password"} input={<TextField />} />
 			</Box>
 		</Paper>
@@ -114,33 +111,6 @@ const Field = (props) => {
 				</Button>
 			)}
 		</Box>
-	);
-};
-
-const PhoneNumberInput = (props) => {
-	const { inputRef, ...other } = props;
-	return (
-		<MaskedInput
-			{...other}
-			mask={[
-				"(",
-				/[1-9]/,
-				/\d/,
-				/\d/,
-				")",
-				" ",
-				/\d/,
-				/\d/,
-				/\d/,
-				"-",
-				/\d/,
-				/\d/,
-				/\d/,
-				/\d/
-			]}
-			placeholderChar={"\u2000"}
-			showMask
-		/>
 	);
 };
 

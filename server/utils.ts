@@ -28,7 +28,7 @@ export const checkIsContainerOwner = async (context: Context, containerId: strin
 	const userRecord: any = await context.db.collection("Users").findOne(context.userId);
 	const containerRecord: any = await context.db
 		.collection("Containers")
-		.findOne(ObjectId(containerId));
+		.findOne(new ObjectId(containerId));
 	if (containerRecord.owner !== userRecord.username) {
 		throw new AuthenticationError("Permissions Invalid For Requested Field");
 	}

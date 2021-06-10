@@ -24,7 +24,6 @@ interface Args {
 
 interface Context {
 	db: any;
-	userId: string;
 }
 
 const createUser = async (_: any, args: Args, context: Context, info: any) => {
@@ -45,6 +44,9 @@ const createUser = async (_: any, args: Args, context: Context, info: any) => {
 		}
 	}
 	if (nullArgs.password) {
+		if (!process.env.PASSWORD_KEY) {
+			throw Error("PASSWORD_KEY Is Not Defined");
+		}
 		nullArgs.password = CryptoJS.AES.encrypt(
 			nullArgs.password,
 			process.env.PASSWORD_KEY
@@ -52,20 +54,12 @@ const createUser = async (_: any, args: Args, context: Context, info: any) => {
 	}
 	const newUser = {
 		...nullArgs,
-		messages: [],
-		incomingFriendRequests: [],
-		outgoingFriendRequests: [],
-		friends: [],
-		matchInvites: [],
-		matches: [],
-		finishedMatches: [],
-		playerStatistics: { wins: 0, losses: 0, stalemates: 0, totalGames: 0 },
-		missions: [],
-		finishedMissions: [],
-		money: 0,
-		items: [ObjectId("6091973e685ad9a5076b5ac1"), ObjectId("609197c0685ad9a5076b5ac2")]
+		containers: []
 	};
 	const userId = (await context.db.collection("Users").insertOne(newUser)).insertedId;
+	if (!process.env.MAIL_USERNAME || !process.env.MAIL_PASSWORD) {
+		throw Error("Must Define MAIL_USERNAME and MAIL_PASSWORD");
+	}
 	const mailTransporter: any = NodeMailer.createTransport({
 		service: "gmail",
 		auth: {

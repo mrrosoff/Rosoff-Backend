@@ -12,7 +12,7 @@ interface Args {
 	name?: string;
 }
 
-const editContainer = async (_, args: Args, context, info) => {
+const editContainer = async (_: any, args: Args, context: any, info: any) => {
 	await checkIsLoggedIn(context);
 	await checkIsContainerOwner(context, args.containerId);
 
@@ -26,7 +26,7 @@ const editContainer = async (_, args: Args, context, info) => {
 	const modifiedContainer = await context.db
 		.collection("Matches")
 		.findOneAndUpdate(
-			{ _id: ObjectId(args.containerId) },
+			{ _id: new ObjectId(args.containerId) },
 			{ $set: nullArgs },
 			{ returnDocument: "after" }
 		);
