@@ -1,6 +1,6 @@
-import containers from "./containers.ts";
-import email from "./email.ts";
-import password from "./password.ts";
+import containers from "./containers";
+import email from "./email";
+import password from "./password";
 
 export default {
 	containers,
