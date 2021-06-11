@@ -7,10 +7,9 @@ import mongodb from "mongodb";
 import CryptoJS from "crypto-js";
 import dotenv from "dotenv";
 
-const { ObjectId } = mongodb;
-
+import { Context } from "../index";
 import { generateAccessToken } from "../auth";
-import { removeNullArgs } from "../db";
+import { removeNullArgs } from "../utils";
 
 dotenv.config();
 
@@ -20,10 +19,6 @@ interface Args {
 	avatar?: string;
 	email?: string;
 	password?: string;
-}
-
-interface Context {
-	db: any;
 }
 
 const createUser = async (_: any, args: Args, context: Context, info: any) => {

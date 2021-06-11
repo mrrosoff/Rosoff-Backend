@@ -2,8 +2,8 @@ import { UserInputError } from "apollo-server-errors";
 
 import mongodb from "mongodb";
 
-import { checkIsLoggedIn, checkIsContainerOwner } from "../utils";
-import { removeNullArgs } from "../db";
+import { Context } from "../index";
+import { checkIsLoggedIn, checkIsContainerOwner, removeNullArgs } from "../utils";
 
 const { ObjectId } = mongodb;
 
@@ -12,7 +12,7 @@ interface Args {
 	name?: string;
 }
 
-const editContainer = async (_: any, args: Args, context: any, info: any) => {
+const editContainer = async (_: any, args: Args, context: Context, info: any) => {
 	await checkIsLoggedIn(context);
 	await checkIsContainerOwner(context, args.containerId);
 

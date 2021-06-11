@@ -4,6 +4,7 @@ import http from "http";
 import { ApolloServer, PubSub, AuthenticationError } from "apollo-server-express";
 import { express as voyagerMiddleware } from "graphql-voyager/middleware/index.js";
 
+import { Db } from "mongodb";
 import dotenv from "dotenv";
 
 import { promises as fs } from "fs";
@@ -27,6 +28,12 @@ dotenv.config();
 
 await client.connect();
 
+export interface Context {
+	userId: string;
+	db: Db;
+	pubsub: any;
+}
+
 const server = new ApolloServer({
 	typeDefs,
 	resolvers,
@@ -42,7 +49,7 @@ const server = new ApolloServer({
 		}
 		return err;
 	},
-	context: async ({ req, connection }) => {
+	context: ({ req, connection }): Context => {
 		if (!connection) {
 			throw Error("Connection Object Is Undefined");
 		}
@@ -93,7 +100,7 @@ app.post("/apple-login", async (req, res) => {
 		token = await createUser(
 			undefined,
 			{ email: data.email },
-			{ db: client.db("Kings-Corner") },
+			{ userId: "", db: client.db("Kings-Corner"), pubsub: undefined },
 			undefined
 		);
 	}

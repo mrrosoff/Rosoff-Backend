@@ -1,6 +1,12 @@
+import { Context } from "../index";
 import { checkIsMe } from "../utils";
 
-const containers = async (parent: any, args: any, context: any, info: any) => {
+interface Parent {
+	_id: string;
+	containers: Array<string>;
+}
+
+const containers = async (parent: Parent, args: any, context: Context, info: any) => {
 	checkIsMe(parent, context);
 	return context.db
 		.collection("Containers")

@@ -1,3 +1,4 @@
+import { Context } from "../index";
 import { checkIsLoggedIn } from "../utils";
 
 interface NewContainer {
@@ -5,9 +6,9 @@ interface NewContainer {
 	owner: string;
 }
 
-const createMatch = async (_: any, args: any, context: any, info: any) => {
+const createMatch = async (_: any, args: any, context: Context, info: any) => {
 	await checkIsLoggedIn(context);
-	const userRecord = await context.db.collection("Users").findOne(context.userId);
+	const userRecord = await context.db.collection("Users").findOne({ _id: context.userId });
 	const newContainer: NewContainer = {
 		owner: userRecord.username
 	};

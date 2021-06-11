@@ -3,8 +3,8 @@ import CryptoJS from "crypto-js";
 import { UserInputError } from "apollo-server-errors";
 import dotenv from "dotenv";
 
-import { checkIsLoggedIn } from "../utils";
-import { removeNullArgs } from "../db";
+import { Context } from "../index";
+import { checkIsLoggedIn, removeNullArgs } from "../utils";
 
 dotenv.config();
 
@@ -14,11 +14,6 @@ interface Args {
 	avatar?: string;
 	email?: string;
 	password?: string;
-}
-
-interface Context {
-	db: any;
-	userId: string;
 }
 
 const editUser = async (_: any, args: Args, context: Context, info: any) => {

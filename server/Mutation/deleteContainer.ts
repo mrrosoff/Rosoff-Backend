@@ -1,10 +1,11 @@
 import mongodb from "mongodb";
 
+import { Context } from "../index";
 import { checkIsLoggedIn, checkIsContainerOwner } from "../utils";
 
 const { ObjectId } = mongodb;
 
-const deleteMatch = async (_: any, args: any, context: any, info: any) => {
+const deleteMatch = async (_: any, args: any, context: Context, info: any) => {
 	await checkIsLoggedIn(context);
 	await checkIsContainerOwner(context, args.containerId);
 

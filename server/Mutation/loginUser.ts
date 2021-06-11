@@ -2,12 +2,13 @@ import { UserInputError } from "apollo-server-express";
 import CryptoJS from "crypto-js";
 import dotenv from "dotenv";
 
+import { Context } from "../index";
 import { generateAccessToken } from "../auth";
-import { removeNullArgs } from "../db";
+import { removeNullArgs } from "../utils";
 
 dotenv.config();
 
-const loginUser = async (_: any, args: any, context: any, info: any) => {
+const loginUser = async (_: any, args: any, context: Context, info: any) => {
 	const { email, username, password } = args;
 	const userRecord = await context.db
 		.collection("Users")

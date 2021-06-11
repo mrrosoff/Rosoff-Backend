@@ -5,7 +5,7 @@ import editContainer from "./editContainer";
 import editUser from "./editUser";
 import googleLogin from "./googleLogin";
 import loginUser from "./loginUser";
-import sendPasswordResetEmail from "./sendResetPasswordEmail";
+import sendResetPasswordEmail from "./sendResetPasswordEmail";
 
 export default {
 	createContainer,
@@ -15,5 +15,5 @@ export default {
 	editUser,
 	googleLogin,
 	loginUser,
-	sendPasswordResetEmail
+	sendResetPasswordEmail
 };

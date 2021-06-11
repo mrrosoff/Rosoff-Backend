@@ -2,12 +2,13 @@ import { OAuth2Client } from "google-auth-library";
 
 import dotenv from "dotenv";
 
+import { Context } from "../index";
 import { generateAccessToken } from "../auth";
 import createUser from "./createUser";
 
 dotenv.config();
 
-const googleLogin = async (_: any, args: any, context: any, info: any) => {
+const googleLogin = async (_: any, args: any, context: Context, info: any) => {
 	const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 	const ticket = await client.verifyIdToken({
 		idToken: args.token,
