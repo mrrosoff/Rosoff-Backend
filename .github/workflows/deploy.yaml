@@ -1,17 +1,17 @@
-name: Build and Deploy
+name: Continuous Deployment
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-
+  
   deploy:
-
-    name: Deploy To Production Instance
+    
+    name: Deploy
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: Pull On Host Machine
+      - name: Say Hi
         run: echo "Hello World"
