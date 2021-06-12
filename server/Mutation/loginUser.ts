@@ -8,7 +8,13 @@ import { removeNullArgs } from "../utils";
 
 dotenv.config();
 
-const loginUser = async (_: any, args: any, context: Context, info: any) => {
+interface Args {
+	email?: string;
+	username?: string;
+	password: string;
+}
+
+const loginUser = async (_: any, args: Args, context: Context, info: any) => {
 	const { email, username, password } = args;
 	const userRecord = await context.db
 		.collection("Users")

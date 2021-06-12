@@ -2,9 +2,9 @@ import chai from "chai";
 
 chai.should();
 
-import mocks from "../../server/mocking.js";
+import mocks from "../../server/mocking";
 
-describe("mocking.js", () => {
+describe("mocking", () => {
 	describe("mocks", () => {
 		it("should be a object", () => {
 			mocks.should.be.an("object");

@@ -37,8 +37,8 @@ type Mutation {
 	editUser(name: String, email: String, avatar: String, username: String, password: String): User!
 	sendResetPasswordEmail(email: String, username: String): Boolean
 	createContainer: Container!
-	editContainer(containerId: ID!, name: String): Container
-	deleteContainer(containerId: ID!): Boolean
+	editContainer(_id: ID!, name: String): Container
+	deleteContainer(_id: ID!): Boolean
 }
 
 type Subscription {

@@ -6,15 +6,13 @@ import { AuthenticationError } from "apollo-server-express";
 import casual from "casual";
 import mongodb from "mongodb";
 
-const { ObjectId } = mongodb;
-
 import {
 	generateAccessToken,
 	decryptAccessToken,
 	authenticateHTTPAccessToken
-} from "../../server/auth.js";
+} from "../../server/auth";
 
-describe("auth.js", () => {
+describe("auth", () => {
 	describe("generateAccessToken", () => {
 		it("should be a function", () => {
 			generateAccessToken.should.be.a("function");
@@ -57,7 +55,7 @@ describe("auth.js", () => {
 			const id = casual.array_of_digits(24).join("");
 			const token = generateAccessToken(id);
 			const req = { headers: { authorization: `Bearer ${token}` } };
-			authenticateHTTPAccessToken(req).should.deep.equal(ObjectId(id));
+			authenticateHTTPAccessToken(req).should.deep.equal(mongodb.ObjectId(id));
 		});
 	});
 });

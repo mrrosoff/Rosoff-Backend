@@ -2,9 +2,9 @@ import chai from "chai";
 
 chai.should();
 
-import { typeDefs, resolvers } from "../../server/schema.js";
+import { typeDefs, resolvers } from "../../server/schema";
 
-describe("schema.js", () => {
+describe("schema", () => {
 	describe("typeDefs", () => {
 		it("should be an object", () => {
 			typeDefs.should.be.an("object");

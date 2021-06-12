@@ -72,7 +72,7 @@ const createUser = async (_: any, args: Args, context: Context, info: any) => {
 	const mailDetails = {
 		from: process.env.MAIL_USERMAME,
 		to: nullArgs.email,
-		subject: "King's Corner Account Created",
+		subject: "Rosoff Dev Account Created",
 		html: file
 	};
 	mailTransporter.sendMail(mailDetails);

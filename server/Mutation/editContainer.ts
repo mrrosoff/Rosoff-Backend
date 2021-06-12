@@ -8,13 +8,13 @@ import { checkIsLoggedIn, checkIsContainerOwner, removeNullArgs } from "../utils
 const { ObjectId } = mongodb;
 
 interface Args {
-	containerId: string;
+	_id: string;
 	name?: string;
 }
 
 const editContainer = async (_: any, args: Args, context: Context, info: any) => {
 	await checkIsLoggedIn(context);
-	await checkIsContainerOwner(context, args.containerId);
+	await checkIsContainerOwner(context, args._id);
 
 	const nullArgs: any = removeNullArgs(args);
 	if (nullArgs.name) {
@@ -24,9 +24,9 @@ const editContainer = async (_: any, args: Args, context: Context, info: any) =>
 	}
 
 	const modifiedContainer = await context.db
-		.collection("Matches")
+		.collection("Containers")
 		.findOneAndUpdate(
-			{ _id: new ObjectId(args.containerId) },
+			{ _id: new ObjectId(args._id) },
 			{ $set: nullArgs },
 			{ returnDocument: "after" }
 		);

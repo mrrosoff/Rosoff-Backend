@@ -11,7 +11,12 @@ import { removeNullArgs } from "../utils";
 
 dotenv.config();
 
-const sendResetPasswordEmail = async (_: any, args: any, context: Context, info: any) => {
+interface Args {
+	email?: string;
+	username: string;
+}
+
+const sendResetPasswordEmail = async (_: any, args: Args, context: Context, info: any) => {
 	const userRecord = await context.db.collection("Users").findOne(removeNullArgs(args));
 	if (!userRecord) return false;
 	let mailTransporter = NodeMailer.createTransport({
@@ -38,7 +43,7 @@ const sendResetPasswordEmail = async (_: any, args: any, context: Context, info:
 	const mailDetails = {
 		from: process.env.MAIL_USERMAME,
 		to: userRecord.email,
-		subject: "King's Corner Password Reset",
+		subject: "Rosoff Dev Password Reset",
 		html: htmlToSend
 	};
 	mailTransporter.sendMail(mailDetails);

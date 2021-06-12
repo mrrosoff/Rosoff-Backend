@@ -5,15 +5,16 @@ import { checkIsLoggedIn, checkIsContainerOwner } from "../utils";
 
 const { ObjectId } = mongodb;
 
-const deleteMatch = async (_: any, args: any, context: Context, info: any) => {
-	await checkIsLoggedIn(context);
-	await checkIsContainerOwner(context, args.containerId);
+interface Args {
+	_id: string
+}
 
-	await context.db.collection("Matches").deleteOne({ _id: new ObjectId(args.containerId) });
-	context.pubsub.publish("DELETED_MATCH", {
-		containerId: args.containerId
-	});
+const deleteContainer = async (_: any, args: Args, context: Context, info: any) => {
+	await checkIsLoggedIn(context);
+	await checkIsContainerOwner(context, args._id);
+	context.db.collection("Container").deleteOne({ _id: new ObjectId(args._id) });
+	context.pubsub.publish("DELETED_CONTAINER", { _id: args._id });
 	return true;
 };
 
-export default deleteMatch;
+export default deleteContainer;

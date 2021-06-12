@@ -8,7 +8,11 @@ import createUser from "./createUser";
 
 dotenv.config();
 
-const googleLogin = async (_: any, args: any, context: Context, info: any) => {
+interface Args {
+	token: string;
+}
+
+const googleLogin = async (_: any, args: Args, context: Context, info: any) => {
 	const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 	const ticket = await client.verifyIdToken({
 		idToken: args.token,
