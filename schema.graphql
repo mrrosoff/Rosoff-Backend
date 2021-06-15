@@ -40,7 +40,7 @@ type Mutation {
 	sendResetPasswordEmail(email: String, username: String): Boolean
 	createContainer: Container!
 	editContainer(id: ID!, name: String): Container
-	deleteContainer(id: ID!): Boolean
+	deleteContainer(id: ID!): Container
 }
 
 type Subscription {

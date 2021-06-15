@@ -11,7 +11,10 @@ const deleteContainer = async (_: any, args: Args, context: Context, info: any) 
 	const containers = await context.docker.container.list({ all: true });
 	const container = containers.filter((container) => container.id === args.id)[0];
 	container.delete({ force: true });
-	return true;
+	context.db
+		.collection("Users")
+		.updateOne({ _id: context.userId }, { $pull: { containers: container.id } });
+	return container.data;
 };
 
 export default deleteContainer;

@@ -9,14 +9,11 @@ interface NewContainer {
 
 const createContainer = async (_: any, args: Args, context: Context, info: any) => {
 	await checkIsLoggedIn(context);
-	const containerId = (await context.docker.container.create({ Image: "ubuntu" })).id;
-	const newContainer: NewContainer = {
-		id: containerId
-	};
+	const container = await context.docker.container.create({ Image: "ubuntu" });
 	context.db
 		.collection("Users")
-		.updateOne({ _id: context.userId }, { $push: { containers: newContainer.id } });
-	return newContainer;
+		.updateOne({ _id: context.userId }, { $push: { containers: container.id } });
+	return container.data;
 };
 
 export default createContainer;
