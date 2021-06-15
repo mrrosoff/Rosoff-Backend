@@ -8,13 +8,15 @@ type User {
 }
 
 type Container {
-	_id: ID!
-	name: String
-	status: String
-	createdAt: DateTime
-	address: String
-	privateKey: String
-	logs: String
+	id: ID!
+	names: [String]
+    image: String
+    imageId: String
+    command: String
+    created: DateTime
+    ports: [String]
+    status: String
+    mounts: [String]
 }
 
 type GoogleLoginReponsePayload {
@@ -27,7 +29,7 @@ scalar AuthorizationToken
 
 type Query {
 	selfLookup: User
-	containerLookup(_id: ID!): Container
+	containerLookup(id: ID!): Container
 }
 
 type Mutation {
@@ -37,10 +39,10 @@ type Mutation {
 	editUser(name: String, email: String, avatar: String, username: String, password: String): User!
 	sendResetPasswordEmail(email: String, username: String): Boolean
 	createContainer: Container!
-	editContainer(_id: ID!, name: String): Container
-	deleteContainer(_id: ID!): Boolean
+	editContainer(id: ID!, name: String): Container
+	deleteContainer(id: ID!): Boolean
 }
 
 type Subscription {
-	newContainerLog(_id: ID!): String
+	newContainerLog(id: ID!): String
 }

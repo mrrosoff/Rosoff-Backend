@@ -1,17 +1,15 @@
-import mongodb from "mongodb";
-
 import { Context } from "../index";
 import { checkIsContainerOwner } from "../utils";
 
-const { ObjectId } = mongodb;
-
 interface Args {
-	_id: string;
+	id: string;
 }
 
-const containerLookup = (_: any, args: Args, context: Context, info: any) => {
-	checkIsContainerOwner(context, args._id);
-	return context.db.collection("Containers").findOne({ _id: new ObjectId(args._id) });
+const containerLookup = async (_: any, args: Args, context: Context, info: any) => {
+	checkIsContainerOwner(context, args.id);
+	const containers = await context.docker.container.list({ all: true });
+	const container = containers.filter((container) => container.id === args.id)[0];
+	return container.data;
 };
 
 export default containerLookup;

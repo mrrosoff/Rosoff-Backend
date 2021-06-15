@@ -37,6 +37,7 @@
 		"jsonwebtoken": "^8.5.1",
 		"moment": "^2.29.1",
 		"mongodb": "^3.6.9",
+		"node-docker-api": "^1.1.22",
 		"nodemailer": "^6.6.1",
 		"notistack": "^1.0.9",
 		"react": "^17.0.2",

@@ -18,11 +18,8 @@ export const checkIsContainerOwner = async (
 	context: Context,
 	containerId: string
 ): Promise<void> => {
-	const userRecord: any = await context.db.collection("Users").findOne({ id: context.userId });
-	const containerRecord: any = await context.db
-		.collection("Containers")
-		.findOne(new mongodb.ObjectId(containerId));
-	if (containerRecord.owner !== userRecord.username) {
+	const userRecord: any = await context.db.collection("Users").findOne({ _id: context.userId });
+	if (!userRecord.containers.includes(containerId)) {
 		throw new AuthenticationError("Permissions Invalid For Requested Field");
 	}
 };

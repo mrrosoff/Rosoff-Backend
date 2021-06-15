@@ -12,6 +12,8 @@ import handlebars from "handlebars";
 
 import AppleSignIn from "apple-signin-auth";
 
+import { Docker } from "node-docker-api";
+
 import { authenticateHTTPAccessToken, generateAccessToken } from "./auth";
 import { client } from "./db";
 import mocks from "./mocking";
@@ -32,6 +34,7 @@ export interface Context {
 	userId: string;
 	db: Db;
 	pubsub: any;
+	docker: any;
 }
 
 const server = new ApolloServer({
@@ -50,13 +53,12 @@ const server = new ApolloServer({
 		return err;
 	},
 	context: ({ req, connection }): Context => {
-		if (!connection) {
-			throw Error("Connection Object Is Undefined");
-		}
 		return {
+			// @ts-ignore: connection will always be defined
 			userId: req ? authenticateHTTPAccessToken(req) : connection.context.userId,
-			db: client.db("Kings-Corner"),
-			pubsub: pubsub
+			db: client.db("Rosoff-Dev"),
+			pubsub: pubsub,
+			docker: new Docker({ socketPath: "/var/run/docker.sock" })
 		};
 	},
 	subscriptions: {
@@ -100,7 +102,7 @@ app.post("/apple-login", async (req, res) => {
 		token = await createUser(
 			undefined,
 			{ email: data.email },
-			{ userId: "", db: client.db("Kings-Corner"), pubsub: undefined },
+			{ userId: "", db: client.db("Kings-Corner"), pubsub: undefined, docker: undefined },
 			undefined
 		);
 	}
