@@ -12,7 +12,7 @@ import handlebars from "handlebars";
 
 import AppleSignIn from "apple-signin-auth";
 
-import { Docker } from "node-docker-api";
+import Docker from "dockerode";
 
 import { authenticateHTTPAccessToken, generateAccessToken } from "./auth";
 import { client } from "./db";
@@ -58,7 +58,7 @@ const server = new ApolloServer({
 			userId: req ? authenticateHTTPAccessToken(req) : connection.context.userId,
 			db: client.db("Rosoff-Dev"),
 			pubsub: pubsub,
-			docker: new Docker({ socketPath: "/var/run/docker.sock" })
+			docker: new Docker()
 		};
 	},
 	subscriptions: {

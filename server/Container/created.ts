@@ -1,11 +1,11 @@
 import { Context } from "../index";
 
 interface Parent {
-	Created: number;
+	Created: string;
 }
 
 const created = async (parent: Parent, args: any, context: Context, info: any) => {
-	return new Date(parent.Created);
+	return parent.Created;
 };
 
 export default created;

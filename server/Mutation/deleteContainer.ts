@@ -12,7 +12,7 @@ const deleteContainer = async (_: any, args: Args, context: Context, info: any) 
 	container.delete({ force: true });
 	context.db
 		.collection("Users")
-		.updateOne({ _id: context.userId }, { $pull: { containers: container.Id } });
+		.updateOne({ _id: context.userId }, { $pull: { containers: container.id } });
 	return container.inspect();
 };
 
