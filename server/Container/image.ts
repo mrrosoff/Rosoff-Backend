@@ -1,11 +1,13 @@
 import { Context } from "../index";
 
 interface Parent {
-	Image: string;
+	config: {
+		Image: string;
+	};
 }
 
 const image = async (parent: Parent, args: any, context: Context, info: any) => {
-	return parent.Image;
+	return parent.config.Image;
 };
 
 export default image;

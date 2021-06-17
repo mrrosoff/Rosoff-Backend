@@ -9,14 +9,11 @@ type User {
 
 type Container {
 	id: ID!
-	names: [String]
+	name: String
     image: String
     imageId: String
-    command: String
     created: DateTime
-    ports: [String]
     status: String
-    mounts: [String]
 }
 
 type GoogleLoginReponsePayload {

@@ -8,13 +8,12 @@ interface Args {
 const deleteContainer = async (_: any, args: Args, context: Context, info: any) => {
 	await checkIsLoggedIn(context);
 	await checkIsContainerOwner(context, args.id);
-	const containers = await context.docker.container.list({ all: true });
-	const container = containers.filter((container) => container.id === args.id)[0];
+	const container = context.docker.getContainer(args.id);
 	container.delete({ force: true });
 	context.db
 		.collection("Users")
-		.updateOne({ _id: context.userId }, { $pull: { containers: container.id } });
-	return container.data;
+		.updateOne({ _id: context.userId }, { $pull: { containers: container.Id } });
+	return container.inspect();
 };
 
 export default deleteContainer;

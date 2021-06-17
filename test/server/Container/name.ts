@@ -2,12 +2,12 @@ import chai from "chai";
 
 chai.should();
 
-import names from "../../../server/Container/names";
+import name from "../../../server/Container/name";
 
-describe("User/names", () => {
+describe("User/name", () => {
 	describe("names", () => {
 		it("should be a function", () => {
-			names.should.be.a("function");
+			name.should.be.a("function");
 		});
 	});
 });

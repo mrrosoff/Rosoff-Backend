@@ -7,9 +7,7 @@ interface Args {
 
 const containerLookup = async (_: any, args: Args, context: Context, info: any) => {
 	checkIsContainerOwner(context, args.id);
-	const containers = await context.docker.container.list({ all: true });
-	const container = containers.filter((container) => container.id === args.id)[0];
-	return container.data;
+	return context.docker.getContainer(args.id).inspect();
 };
 
 export default containerLookup;

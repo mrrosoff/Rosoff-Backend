@@ -3,7 +3,6 @@ import { promises as fs } from "fs";
 import NodeMailer from "nodemailer";
 
 import { UserInputError } from "apollo-server-errors";
-import mongodb from "mongodb";
 import CryptoJS from "crypto-js";
 import dotenv from "dotenv";
 
