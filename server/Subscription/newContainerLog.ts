@@ -1,5 +1,3 @@
-import { withFilter } from "apollo-server-express";
-
 import { Context } from "../index";
 
 interface Args {
