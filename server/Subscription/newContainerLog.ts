@@ -3,25 +3,18 @@ import { withFilter } from "apollo-server-express";
 import { Context } from "../index";
 
 interface Args {
-	_id: string
-}
-
-interface Payload {
-	_id: string;
-	message: string;
+	id: string;
 }
 
 const newMessage = {
-	resolve: (payload: Payload, args: Args, context: Context) => {
-		return payload.message;
+	resolve: (parent, args, context, info) => {
+		return parent.toString();
 	},
-	subscribe: withFilter(
-		(_: any, args: Args, context: Context, info: any) =>
-			context.pubsub.asyncIterator("NEW_MESSAGE"),
-		(payload: Payload, args: Args, context: Context, info: any) => {
-			return payload._id.toString() === context.userId.toString();
-		}
-	)
+	subscribe: async (_: any, args: Args, context: Context, info: any) => {
+		const container = context.docker.getContainer(args.id);
+		const stream = await container.logs({ follow: true, stdout: true, stderr: true });
+		return stream;
+	}
 };
 
 export default newMessage;
