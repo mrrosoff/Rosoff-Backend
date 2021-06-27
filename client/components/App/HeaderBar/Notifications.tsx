@@ -1,138 +1,20 @@
-import { useEffect } from "react";
+import React from 'react';
 
-import {
-	Avatar,
-	Badge,
-	Box,
-	ClickAwayListener,
-	Divider,
-	Grid,
-	Grow,
-	IconButton,
-	List,
-	ListItem,
-	ListItemSecondaryAction,
-	ListItemText,
-	Popper,
-	Typography
-} from "@material-ui/core";
-import { AvatarGroup } from "@material-ui/lab";
-import { makeStyles } from "@material-ui/core/styles";
+import { Badge, Box, ClickAwayListener, Grid, Grow, IconButton, Popper } from "@material-ui/core";
 
-import ClearIcon from "@material-ui/icons/Clear";
-import CheckIcon from "@material-ui/icons/Check";
 import NotificationsOutlinedIcon from "@material-ui/icons/NotificationsOutlined";
 
-import { useMutation, useQuery } from "@apollo/client";
-import { GetHeaderNotifications } from "../../../graphql/query.js";
-import { ResolveRequestFriend, ResolveInviteFriend } from "../../../graphql/mutation.js";
-import { NewFriendRequest, NewMatchInvite } from "../../../graphql/subscription.js";
-
-const useStyles = makeStyles((theme) => ({
-	avatar: {
-		width: theme.spacing(5),
-		height: theme.spacing(5)
-	}
-}));
-
 const Notifications = (props) => {
-	const classes = useStyles();
-
 	const handleClose = (event) => {
 		if (props.anchorRef.current && props.anchorRef.current.contains(event.target)) return;
 		props.handleOpen(null);
 	};
 
-	const { loading, error, data, subscribeToMore } = useQuery(GetHeaderNotifications);
-
-	const [resolveRequestFriend] = useMutation(ResolveRequestFriend, {
-		update(cache, { data: { resolveRequestFriend } }) {
-			cache.modify({
-				fields: {
-					selfLookup(existingSelfLookup = {}) {
-						return {
-							...existingSelfLookup,
-							incomingFriendrRequests: resolveRequestFriend.incomingFriendRequests
-						};
-					}
-				}
-			});
-		}
-	});
-
-	const [resolveInviteFriend] = useMutation(ResolveInviteFriend, {
-		update(cache, { data: { resolveInviteFriend } }) {
-			cache.modify({
-				fields: {
-					selfLookup(existingSelfLookup = {}) {
-						return {
-							...existingSelfLookup,
-							matchInvites: resolveInviteFriend.matchInvites
-						};
-					}
-				}
-			});
-		}
-	});
-
-	useEffect(() => {
-		subscribeToMore({
-			document: NewFriendRequest,
-			updateQuery: (prev, { subscriptionData }) => {
-				if (!subscriptionData.data) return prev;
-				return {
-					...prev,
-					selfLookup: {
-						...prev.selfLookup,
-						incomingFriendRequests: [
-							...(prev.selfLookup.incomingFriendRequests || []),
-							{
-								username: subscriptionData.data.newFriendRequest
-							}
-						]
-					}
-				};
-			}
-		});
-		subscribeToMore({
-			document: NewMatchInvite,
-			updateQuery: (prev, { subscriptionData }) => {
-				if (!subscriptionData.data) return prev;
-				return {
-					...prev,
-					selfLookup: {
-						...prev.selfLookup,
-						matchInvites: [
-							...(prev.selfLookup.matchInvites || []),
-							{
-								players: [
-									...(prev.selfLookup.matchInvites?.players || []),
-									{
-										username: subscriptionData.data.newMatchInvite
-									}
-								]
-							}
-						]
-					}
-				};
-			}
-		});
-	});
-
-	if (loading || error) return null;
-
 	return (
 		<>
 			<Grid container justify={"center"} alignContent={"center"} alignItems={"center"}>
 				<IconButton onClick={() => props.handleOpen("notifications")}>
-					<Badge
-						color="secondary"
-						variant="dot"
-						invisible={
-							data.selfLookup.matchInvites.length === 0 &&
-							data.selfLookup.incomingFriendRequests.length === 0
-						}
-					>
+					<Badge color="secondary" variant="dot">
 						<NotificationsOutlinedIcon />
 					</Badge>
 				</IconButton>
@@ -159,140 +41,13 @@ const Notifications = (props) => {
 							borderColor={"neutral.mediumDark"}
 						>
 							<ClickAwayListener onClickAway={handleClose}>
-								<Box p={1}>
-									<Typography
-										color="textSecondary"
-										style={{ fontSize: 18, fontWeight: 500 }}
-									>
-										Friend Requests
-									</Typography>
-									<Divider />
-									{data.selfLookup.incomingFriendRequests.length === 0 && (
-										<Box pt={2}>
-											<Typography
-												color="textPrimary"
-												style={{ fontSize: 15, fontWeight: 500 }}
-											>
-												You have no new friend requests
-											</Typography>
-										</Box>
-									)}
-									<NotificationsFriendRequests
-										data={data}
-										resolveRequestFriend={resolveRequestFriend}
-									/>
-									<Typography
-										color="textSecondary"
-										style={{ fontSize: 18, fontWeight: 500 }}
-									>
-										Match Invites
-									</Typography>
-									<Divider />
-									{data.selfLookup.matchInvites.length === 0 && (
-										<Box pt={2}>
-											<Typography
-												color="textPrimary"
-												style={{ fontSize: 15, fontWeight: 500 }}
-											>
-												You have no new match invites
-											</Typography>
-										</Box>
-									) }
-									<NotificationMatchRequests
-										data={data}
-										resolveInviteFriend={resolveInviteFriend}
-									/>
-								</Box>
+								<Box p={1}></Box>
 							</ClickAwayListener>
 						</Box>
 					</Grow>
 				)}
 			</Popper>
 		</>
-	);
-};
-
-const NotificationsFriendRequests = (props) => {
-	return (
-		<List>
-			{props.data.selfLookup.incomingFriendRequests.map((friend, index) => (
-				<ListItem key={index}>
-					<AvatarGroup max={2} style={{ paddingRight: 20 }}>
-						<Avatar src={friend.avatar} key={index} />
-					</AvatarGroup>
-					<ListItemText>{friend.username}</ListItemText>
-					<ListItemSecondaryAction>
-						<IconButton
-							onClick={() =>
-								props.resolveRequestFriend({
-									variables: {
-										friendUsername: friend.username,
-										choice: false
-									}
-								})
-							}
-						>
-							<ClearIcon />
-						</IconButton>
-						<IconButton
-							onClick={() =>
-								props.resolveRequestFriend({
-									variables: {
-										friendUsername: friend.username,
-										choice: true
-									}
-								})
-							}
-						>
-							<CheckIcon />
-						</IconButton>
-					</ListItemSecondaryAction>
-				</ListItem>
-			))}
-		</List>
-	);
-};
-
-const NotificationMatchRequests = (props) => {
-	return (
-		<List>
-			{props.data.selfLookup.matchInvites.map((match, index) => (
-				<ListItem key={index}>
-					<AvatarGroup max={2} style={{ paddingRight: 20 }}>
-						{match.players.map((player, index) => (
-							<Avatar src={player.avatar} key={index} />
-						))}
-					</AvatarGroup>
-					<ListItemText>{match.players[0].username}</ListItemText>
-					<ListItemSecondaryAction>
-						<IconButton
-							onClick={() =>
-								props.resolveInviteFriend({
-									variables: {
-										containerId: match._id,
-										choice: false
-									}
-								})
-							}
-						>
-							<ClearIcon />
-						</IconButton>
-						<IconButton
-							onClick={() =>
-								props.resolveInviteFriend({
-									variables: {
-										containerId: match._id,
-										choice: true
-									}
-								})
-							}
-						>
-							<CheckIcon />
-						</IconButton>
-					</ListItemSecondaryAction>
-				</ListItem>
-			))}
-		</List>
 	);
 };
 

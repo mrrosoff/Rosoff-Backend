@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Link, useHistory, useLocation } from "react-router-dom";
 
@@ -16,8 +16,8 @@ import {
 	GoogleLogin as GoogleLoginMutation
 } from "../../graphql/mutation.js";
 
-import Logo from "../UI/Logo.jsx";
-import { OAuthButton, SignInButton } from "../UI/Buttons.jsx";
+import Logo from "../UI/Logo";
+import { OAuthButton, SignInButton } from "../UI/Buttons";
 
 import { GoogleLogin } from "react-google-login";
 const GoogleClientID = "358595367659-2qlsasdtkdbml8gvfca105gaaq0kkvh4.apps.googleusercontent.com";
@@ -255,7 +255,7 @@ const OAuthArea = (props) => {
 		const pairsInObject = pairsInArray.reduce((prev, curr) => {
 			prev[curr[0]] = curr[1];
 			return prev;
-		}, {});
+		}, {}) as any;
 		const idToken = pairsInObject.id_token;
 		localStorage.removeItem("token");
 		setRedirectInProgress(true);

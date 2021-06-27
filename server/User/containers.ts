@@ -6,12 +6,11 @@ interface Parent {
 	containers: Array<string>;
 }
 
-const containers = async (parent: Parent, args: any, context: Context, info: any) => {
+const containers = (parent: Parent, args: any, context: Context, info: any) => {
 	checkIsMe(parent, context);
-	return context.db
-		.collection("Containers")
-		.find({ _id: { $in: parent.containers } })
-		.toArray();
+	return parent.containers.map((containerId) =>
+		context.docker.getContainer(containerId).inspect()
+	);
 };
 
 export default containers;

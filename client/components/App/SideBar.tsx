@@ -1,37 +1,26 @@
+import React from "react";
+
 import { Link, useHistory, useLocation } from "react-router-dom";
 
 import { Box, Button, Grid, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
-import RedeemIcon from "@material-ui/icons/Redeem";
-import LocalMallIcon from "@material-ui/icons/LocalMall";
-import StorefrontIcon from "@material-ui/icons/Storefront";
 
-import { useQuery, useMutation } from "@apollo/client";
-import { GetBattlePassItems } from "../../graphql/query.js";
-import { CreateMatch } from "../../graphql/mutation.js";
+import { useMutation } from "@apollo/client";
+import { CreateContainer } from "../../graphql/mutation.js";
 
 const SideBar = (props) => {
-	const { loading, error, data } = useQuery(GetBattlePassItems);
-
 	const menuEntries = [
-		{ text: "Dashboard", icon: DashboardIcon },
-		{ text: "Matches", icon: SportsEsportsIcon },
-		{
-			text: "Battle Pass",
-			icon: RedeemIcon,
-			disabled: loading || error || !data.selfLookup.battlePass
-		},
-		{ text: "Collection", icon: LocalMallIcon },
-		{ text: "Shop", icon: StorefrontIcon }
+		{ text: "Dashboard", icon: DashboardIcon, disabled: false },
+		{ text: "Containers", icon: SportsEsportsIcon, disabled: false }
 	];
 
 	const history = useHistory();
 	const location = useLocation();
 
-	const [createMatch] = useMutation(CreateMatch, {
-		onCompleted: (data) => history.replace({ pathname: "/app/matches/" + data.createMatch._id })
+	const [createContainer] = useMutation(CreateContainer, {
+		onCompleted: (data) => history.replace({ pathname: "/app/containers/" + data.createContainer.id })
 	});
 
 	return (
@@ -49,7 +38,7 @@ const SideBar = (props) => {
 					variant={"contained"}
 					color={"primary"}
 					style={{ height: 50, borderRadius: 8, textTransform: "none" }}
-					onClick={createMatch}
+					onClick={() => createContainer()}
 				>
 					<Grid
 						container
@@ -59,7 +48,7 @@ const SideBar = (props) => {
 						alignContent={"center"}
 					>
 						<Grid item>
-							<Typography>Create Match</Typography>
+							<Typography>Create Container</Typography>
 						</Grid>
 						<AddIcon />
 					</Grid>

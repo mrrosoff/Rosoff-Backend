@@ -1,10 +1,12 @@
+import React from "react";
+
 import { Link } from "react-router-dom";
 
 import { Box, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Logo from "../UI/Logo.jsx";
-import { HomePageSmallButton } from "../UI/Buttons.jsx";
+import Logo from "../UI/Logo";
+import { HomePageSmallButton } from "../UI/Buttons";
 
 const useStyles = makeStyles((theme) => ({
 	avatar: {

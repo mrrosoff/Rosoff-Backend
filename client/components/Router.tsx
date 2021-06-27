@@ -1,21 +1,23 @@
+import React from "react";
+
 import { BrowserRouter, Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
 
-import Home from "./Index/Home.jsx";
+import Home from "./Index/Home";
 
-import LoginLayout from "./Login/Layout.jsx";
-import Login from "./Login/Login.jsx";
-import CreateAccount from "./Login/CreateAccount.jsx";
-import ForgotPassword from "./Login/ForgotPassword.jsx";
+import LoginLayout from "./Login/Layout";
+import Login from "./Login/Login";
+import CreateAccount from "./Login/CreateAccount";
+import ForgotPassword from "./Login/ForgotPassword";
 
-import AppLayout from "./App/AppLayout.jsx";
+import AppLayout from "./App/AppLayout";
 
-import DashBoard from "./App/Pages/Dashboard.jsx";
-import Containers from "./App/Pages/Containers.jsx";
-import Container from "./App/Container/Container.jsx";
+import DashBoard from "./App/Pages/Dashboard";
+import Containers from "./App/Pages/Containers";
+import Container from "./App/Container/Container";
 
-import Profile from "./App/Pages/Profile.jsx";
-import NotFound from "./NotFound.jsx";
-import FinalizeAccount from "./Login/FinalizeAccount.jsx";
+import Profile from "./App/Pages/Profile";
+import NotFound from "./NotFound";
+import FinalizeAccount from "./Login/FinalizeAccount";
 
 const Router = (props: any) => {
 	return (

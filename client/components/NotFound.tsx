@@ -1,8 +1,10 @@
+import React from "react";
+
 import { Link } from "react-router-dom";
 
 import { Grid, Typography } from "@material-ui/core";
 
-import Logo from "./UI/Logo.jsx";
+import Logo from "./UI/Logo";
 
 const NotFound = (props: any) => {
 	return (

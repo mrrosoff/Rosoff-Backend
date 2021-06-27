@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Link, useHistory } from "react-router-dom";
 
@@ -13,8 +13,8 @@ import clsx from "clsx";
 import { useMutation } from "@apollo/client";
 import { CreateUser } from "../../graphql/mutation.js";
 
-import { SignInButton } from "../UI/Buttons.jsx";
-import Logo from "../UI/Logo.jsx";
+import { SignInButton } from "../UI/Buttons";
+import Logo from "../UI/Logo";
 
 const useStyles = makeStyles((theme) => ({
 	textFieldPadding: {

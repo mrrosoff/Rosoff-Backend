@@ -46,184 +46,30 @@ export const EditUser = gql`
 `;
 
 export const SendResetPasswordEmail = gql`
-	mutation SendResetPasswordEmail($email: String,  $username: String){
+	mutation SendResetPasswordEmail($email: String, $username: String) {
 		sendResetPasswordEmail(email: $email, username: $username)
 	}
 `;
 
-export const RequestFriend = gql`
-	mutation RequestFriend($friendUsername: String!) {
-		requestFriend(friendUsername: $friendUsername) {
-			outgoingFriendRequests {
-				username
-				avatar
-			}
+export const CreateContainer = gql`
+	mutation CreateContainer {
+		createContainer {
+			id
 		}
 	}
 `;
 
-export const ResolveRequestFriend = gql`
-	mutation ResolveRequestFriend($friendUsername: String!, $choice: Boolean!) {
-		resolveRequestFriend(friendUsername: $friendUsername, choice: $choice) {
-			incomingFriendRequests {
-				username
-				avatar
-			}
-		}
-	}
-`;
-
-export const CreateMatch = gql`
-	mutation CreateMatch {
-		createMatch {
-			_id
-		}
-	}
-`;
-
-export const EditMatch = gql`
-	mutation EditMatch(
-		$containerId: ID!
-		$gameType: GAME_TYPE
-		$name: String
-		$boardSkin: ID
-		$pieceSkin: ID
-	) {
-		editMatch(
-			containerId: $containerId
-			gameType: $gameType
-			name: $name
-			boardSkin: $boardSkin
-			pieceSkin: $pieceSkin
-		) {
-			_id
-			gameType
+export const EditContainer = gql`
+	mutation EditContainer($id: ID!, $name: String) {
+		editContainer(id: $id, name: $name) {
+			id
 			name
-			boardSkin {
-				_id
-				name
-			}
-			pieceSkin {
-				_id
-				name
-			}
 		}
 	}
 `;
 
-export const InviteFriend = gql`
-	mutation InviteFriend($containerId: ID!, $friendUsername: String!) {
-		inviteFriend(containerId: $containerId, friendUsername: $friendUsername) {
-			_id
-			pendingPlayers {
-				username
-				avatar
-			}
-		}
-	}
-`;
-
-export const ResolveInviteFriend = gql`
-	mutation ResolveInviteFriend($containerId: ID!, $choice: Boolean!) {
-		resolveInviteFriend(containerId: $containerId, choice: $choice) {
-			_id
-			pendingPlayers {
-				username
-				avatar
-			}
-			players {
-				username
-				avatar
-			}
-		}
-	}
-`;
-
-export const DeleteUserFromMatch = gql`
-	mutation DeleteUserFromMatch($containerId: ID!, $friendUsername: String) {
-		deleteUserFromMatch(containerId: $containerId, friendUsername: $friendUsername) {
-			_id
-			players {
-				username
-				avatar
-			}
-		}
-	}
-`;
-
-export const DeleteMatch = gql`
-	mutation DeleteMatch($containerId: ID!) {
-		deleteMatch(containerId: $containerId)
-	}
-`;
-
-export const StartMatch = gql`
-	mutation StartMatch($containerId: ID!) {
-		startMatch(containerId: $containerId) {
-			_id
-			inProgress
-		}
-	}
-`;
-
-export const MakeMove = gql`
-	mutation MakeMove($containerId: ID!, $updatedFen: Fen!) {
-		makeMove(containerId: $containerId, updatedFen: $updatedFen) {
-			_id
-			... on MatchTwoPlayer {
-				fen
-				fenHistory
-			}
-		}
-	}
-`;
-
-export const ResolveMatch = gql`
-	mutation ResolveMatch($containerId: ID!, $finalFen: Fen!) {
-		resolveMatch(containerId: $containerId, finalFen: $finalFen) {
-			_id
-			matchResults {
-				winner {
-					username
-				}
-				winnerNewRating
-			}
-			... on MatchTwoPlayer {
-				fen
-				fenHistory
-			}
-		}
-	}
-`;
-
-export const SendMessage = gql`
-	mutation SendMessage($friendUsername: String!, $message: String!) {
-		sendMessage(friendUsername: $friendUsername, message: $message) {
-			_id
-			date
-			message
-			to {
-				username
-				avatar
-			}
-		}
-	}
-`;
-
-export const BuyItem = gql`
-	mutation BuyItem($itemId: ID!){
-		buyItem(itemId: $itemId){
-			username
-			money
-			items{
-				type
-				name
-				description
-				thumbnail
-			}
-			battlePass{
-				_id
-			}
-		}
+export const DeleteContainer = gql`
+	mutation DeleteContainer($id: ID!) {
+		deleteContainer(id: $id)
 	}
 `;

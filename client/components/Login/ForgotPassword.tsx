@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Link, useLocation } from "react-router-dom";
 
@@ -15,8 +15,8 @@ import clsx from "clsx";
 import { useMutation } from "@apollo/client";
 import { EditUser, SendResetPasswordEmail } from "../../graphql/mutation.js";
 
-import { SignInButton } from "../UI/Buttons.jsx";
-import Logo from "../UI/Logo.jsx";
+import { SignInButton } from "../UI/Buttons";
+import Logo from "../UI/Logo";
 
 const useStyles = makeStyles((theme) => ({
 	textFieldPadding: {
@@ -238,7 +238,7 @@ const NewPassowrdArea = (props) => {
 			/>
 			<Box className={classes.sectionPadding}>
 				<SignInButton
-					onClick={() => editUser(idField)}
+					onClick={() => editUser()}
 					disabled={loading}
 					loading={loading}
 				>

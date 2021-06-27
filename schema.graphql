@@ -9,11 +9,15 @@ type User {
 
 type Container {
 	id: ID!
-	name: String
-    image: String
-    imageId: String
-    created: DateTime
-    status: String
+	name: String!
+    image: String!
+    imageId: String!
+    created: DateTime!
+    status: ContainerStatus!
+}
+
+enum ContainerStatus {
+	RUNNING
 }
 
 type GoogleLoginReponsePayload {

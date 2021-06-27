@@ -1,8 +1,10 @@
+import React from "react";
+
 import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: any) => ({
 	largeBoldButton: {
 		width: 220,
 		height: 45,

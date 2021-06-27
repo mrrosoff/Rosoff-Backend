@@ -7,7 +7,7 @@ interface Parent {
 }
 
 const status = async (parent: Parent, args: any, context: Context, info: any) => {
-	return parent.State.Status;
+	return parent.State.Status.toUpperCase();
 };
 
 export default status;

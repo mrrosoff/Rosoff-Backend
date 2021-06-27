@@ -1,11 +1,11 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { Box, Grid } from "@material-ui/core";
 
-import Logo from "../UI/Logo.jsx";
-import Search from "./HeaderBar/Search.jsx";
-import Notifications from "./HeaderBar/Notifications.jsx";
-import Profile from "./HeaderBar/Profile.jsx";
+import Logo from "../UI/Logo";
+import Search from "./HeaderBar/Search";
+import Notifications from "./HeaderBar/Notifications";
+import Profile from "./HeaderBar/Profile";
 
 const HeaderBar = (props) => {
 	return (
@@ -45,7 +45,7 @@ const ActionButtons = (props) => {
 	};
 
 	return (
-		<Box ref={anchorRef} p={2} display={"flex"} flexWrap={"nowrap"} style={{ height: "100%" }}>
+		<Box {...{ ref: anchorRef } as any} p={2} display={"flex"} flexWrap={"nowrap"} style={{ height: "100%" }}>
 			<Notifications
 				anchorRef={anchorRef}
 				openDropdown={openDropdown}

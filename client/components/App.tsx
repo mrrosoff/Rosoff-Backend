@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import React, { useRef } from "react";
 
 import { Box, CssBaseline, Hidden, Typography } from "@material-ui/core";
 import { createMuiTheme, responsiveFontSizes, ThemeProvider } from "@material-ui/core/styles";
@@ -14,7 +14,20 @@ import { setContext } from "@apollo/client/link/context";
 
 import { SnackbarProvider } from "notistack";
 
-import Router from "./Router.jsx";
+import Router from "./Router";
+
+declare module "@material-ui/core/styles/createPalette" {
+	interface NeutralPaletteOptions {
+		main: Palette["primary"]["main"];
+		light: Palette["primary"]["main"];
+		medium: Palette["primary"]["main"];
+		mediumDark: Palette["primary"]["main"];
+		dark: Palette["primary"]["main"];
+	}
+	interface PaletteOptions {
+		neutral?: NeutralPaletteOptions;
+	}
+}
 
 const App = () => {
 	let theme = createMuiTheme({
@@ -47,7 +60,7 @@ const App = () => {
 };
 
 const FullApp = (props: any) => {
-	const providerRef = useRef();
+	const providerRef: any = useRef();
 
 	const httpLink = new HttpLink({
 		uri: "/graphql",
@@ -84,7 +97,7 @@ const FullApp = (props: any) => {
 		if (graphQLErrors) {
 			if (
 				graphQLErrors
-					.map((error) => error.extensions.code)
+					.map((error: any) => error.extensions.code)
 					.includes("INTERNAL_SERVER_ERROR")
 			) {
 				providerRef.current.enqueueSnackbar("GraphQL Error - See Console");
@@ -93,7 +106,7 @@ const FullApp = (props: any) => {
 					console.error(`Error: ${error.message}. Operation: ${error.path}`);
 				});
 			} else if (
-				graphQLErrors.map((error) => error.extensions.code).includes("UNAUTHENTICATED")
+				graphQLErrors.map((error: any) => error.extensions.code).includes("UNAUTHENTICATED")
 			) {
 				window.location.href = "/login";
 			}

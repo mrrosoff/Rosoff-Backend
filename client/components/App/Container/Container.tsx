@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import clsx from "clsx";
 import {
@@ -21,8 +21,8 @@ import gfm from "remark-gfm";
 
 import { useMutation, useQuery, useSubscription } from "@apollo/client";
 import { GetContainerData } from "../../../graphql/query";
-import { ModifyContainer } from "../../../graphql/mutation";
-import { SubscribeToContainerLogs } from "../../../graphql/subscription";
+import { EditContainer } from "../../../graphql/mutation";
+import { NewContainerLog } from "../../../graphql/subscription";
 
 const useStyles = makeStyles((theme) => ({
 	expand: {
@@ -38,9 +38,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Container = (props) => {
-	const containerID = useLocation().pathname.split("/").slice(-1).join();
+	const { containerId } = useParams() as any;
 	const { loading, error, data } = useQuery(GetContainerData, {
-		variables: { _id: containerID }
+		variables: { id: containerId }
 	});
 
 	if (loading) return null;
@@ -50,10 +50,10 @@ const Container = (props) => {
 		<Box height={"100%"} display={"flex"} flexDirection={"column"}>
 			<Box pr={4} flexGrow={1} height={500} className={"verticalScrollDiv"}>
 				<Grid container spacing={4}>
-					<InformationAndStatus data={data.container} />
-					<AccessDetails data={data.container} />
-					<ContainerSettings containerID={containerID} data={data.container} />
-					<LogOutput containerID={containerID} data={data.container} />
+					<InformationAndStatus container={data.containerLookup} />
+					<AccessDetails container={data.containerLookup} />
+					<ContainerSettings containerId={containerId} container={data.containerLookup} />
+					<LogOutput containerId={containerId} container={data.containerLookup} />
 				</Grid>
 			</Box>
 		</Box>
@@ -74,10 +74,10 @@ const InformationAndStatus = (props) => {
 				<Box p={4}>
 					<Grid container direction={"column"}>
 						<Grid item>
-							<KeyValuePair name={"Name"} value={props.data.name} />
+							<KeyValuePair name={"Name"} value={props.container.name} />
 						</Grid>
 						<Grid item>
-							<KeyValuePair name={"Status"} value={props.data.status} />
+							<KeyValuePair name={"Status"} value={props.container.status} />
 						</Grid>
 					</Grid>
 				</Box>
@@ -103,7 +103,7 @@ const AccessDetails = (props) => {
 	const markdown = stripIndent(
 		`
 			\`\`\`
-			${props.data.privateKey}
+			${props.container.privateKey}
 			\`\`\`
 			`
 	);
@@ -122,7 +122,7 @@ const AccessDetails = (props) => {
 					<Typography variant={"subtitle2"}>Private Key</Typography>
 					<ReactMarkdown plugins={[gfm]}>{markdown}</ReactMarkdown>
 					<Typography variant={"subtitle2"}>
-						ssh -i [privateKeyFile] root@{props.data.address}
+						ssh -i [privateKeyFile] root@{props.container.address}
 					</Typography>
 				</Box>
 			</Paper>
@@ -134,13 +134,13 @@ const ContainerSettings = (props) => {
 	const [cpuSlider, setCPUSlider] = useState(1);
 	const [memSlider, setMemSlider] = useState(1);
 
-	const [doMutation, { loading }] = useMutation(ModifyContainer, {
+	const [editContainer] = useMutation(EditContainer, {
 		onError: (err) => console.error(err)
 	});
 
-	const modifyContainer = (cpus, memLimit) => {
-		doMutation({
-			variables: { containerID: props.containerID, cpuCount: cpus, memLimit: memLimit + "m" }
+	const modifyContainer = (cpus, memLimit?: any) => {
+		editContainer({
+			variables: { id: props.containerID, cpuCount: cpus, memLimit: memLimit + "m" }
 		});
 	};
 
@@ -164,7 +164,7 @@ const ContainerSettings = (props) => {
 						max={8}
 						valueLabelDisplay={"auto"}
 						onChangeCommitted={(e, newValue) => {
-							setCPUSlider(newValue);
+							setCPUSlider(newValue as number);
 							modifyContainer(newValue);
 						}}
 					/>
@@ -177,7 +177,7 @@ const ContainerSettings = (props) => {
 						max={1000}
 						valueLabelDisplay={"auto"}
 						onChangeCommitted={(e, newValue) => {
-							setMemSlider(newValue);
+							setMemSlider(newValue as number);
 							modifyContainer(undefined, newValue);
 						}}
 					/>
@@ -191,8 +191,8 @@ const LogOutput = (props) => {
 	const classes = useStyles();
 	const [expanded, setExpanded] = useState(false);
 
-	const { loading, error, data } = useSubscription(SubscribeToContainerLogs, {
-		variables: { _id: props.containerID }
+	const { loading, error, data } = useSubscription(NewContainerLog, {
+		variables: { id: props.containerId }
 	});
 
 	if (loading) return null;

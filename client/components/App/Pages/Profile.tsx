@@ -1,36 +1,15 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-import { Link } from "react-router-dom";
-
-import {
-	Avatar,
-	Box,
-	Button,
-	Divider,
-	Grid,
-	IconButton,
-	List,
-	ListItem,
-	ListItemAvatar,
-	ListItemSecondaryAction,
-	ListItemText,
-	Paper,
-	TextField,
-	Typography
-} from "@material-ui/core";
-import NavigateNextOutlinedIcon from "@material-ui/icons/NavigateNextOutlined";
+import { Box, Button, Paper, TextField, Typography } from "@material-ui/core";
 
 import { useQuery } from "@apollo/client";
-import { GetMatchHistory, GetTraditionalProfile } from "../../../graphql/query.js";
+import { GetTraditionalProfile } from "../../../graphql/query.js";
 
 const Profile = (props) => {
 	return (
 		<Box display={"flex"}>
 			<Box>
 				<UserDetails />
-			</Box>
-			<Box ml={4} flexGrow={1}>
-				<MatchHistory />
 			</Box>
 		</Box>
 	);
@@ -111,54 +90,6 @@ const Field = (props) => {
 				</Button>
 			)}
 		</Box>
-	);
-};
-
-const MatchHistory = (props) => {
-	const { loading, error, data } = useQuery(GetMatchHistory);
-
-	if (loading || error) return null;
-
-	return (
-		<Paper style={{ height: "100%" }}>
-			<Grid container justify={"space-between"} alignContent={"center"} alignItems={"center"}>
-				<Grid item>
-					<Typography
-						variant={"h6"}
-						style={{ paddingTop: 18, paddingBottom: 12, paddingLeft: 25 }}
-					>
-						Match History
-					</Typography>
-				</Grid>
-				<Grid item style={{ paddingRight: 10 }}>
-					<Link to={`/app/match-history`}>
-						<IconButton>
-							<NavigateNextOutlinedIcon />
-						</IconButton>
-					</Link>
-				</Grid>
-			</Grid>
-			<Divider />
-			<Box p={1}>
-				<List>
-					{data.selfLookup.finishedMatches.map((match, index) => (
-						<ListItem key={index}>
-							<ListItemAvatar>
-								<Avatar />
-							</ListItemAvatar>
-							<ListItemText primary={"Match Name"} secondary={"Your Turn"} />
-							<ListItemSecondaryAction>
-								<Link to={"/app/matches/" + index}>
-									<IconButton>
-										<NavigateNextOutlinedIcon />
-									</IconButton>
-								</Link>
-							</ListItemSecondaryAction>
-						</ListItem>
-					))}
-				</List>
-			</Box>
-		</Paper>
 	);
 };
 

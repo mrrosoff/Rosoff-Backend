@@ -1,46 +1,45 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import {Box, Grid, IconButton, Paper, Typography} from '@material-ui/core';
-import NavigateNextOutlinedIcon from '@material-ui/icons/NavigateNextOutlined';
+import { Box, Grid, IconButton, Paper, Typography } from "@material-ui/core";
+import NavigateNextOutlinedIcon from "@material-ui/icons/NavigateNextOutlined";
 
-import {useQuery} from "@apollo/client";
-import {GetContainersOverview} from "../../../graphql/query";
+import { useQuery } from "@apollo/client";
+import { GetContainersOverview } from "../../../graphql/query";
 
-const Containers = props =>
-{
-	let authData = useContext(AuthContext);
+const Containers = (props) => {
+	const { loading, error, data } = useQuery(GetContainersOverview);
 
-	const { loading, error, data } = useQuery(GetContainersOverview, {
-		variables: { _id: authData.userID }
-	});
+	if (loading || error) return null;
 
-	if (loading) return null;
-	else if (error) return null;
+	console.log(data);
 
-	return(
+	return (
 		<Box height={"100%"} display={"flex"} flexDirection={"column"}>
 			<Box pr={4} flexGrow={1} height={500} className={"verticalScrollDiv"}>
 				<Grid container spacing={4}>
-					{data.user.containers.map((container, index) =>
+					{data.selfLookup.containers.map((container, index) => (
 						<Grid item key={index}>
-							<ContainerPaper container={container}/>
+							<ContainerPaper container={container} />
 						</Grid>
-					)}
+					))}
 				</Grid>
 			</Box>
 		</Box>
 	);
-}
+};
 
-const ContainerPaper = props =>
-{
+const ContainerPaper = (props) => {
 	return (
-		<Paper style={{width: 400, height: 300}}>
+		<Paper style={{ width: 400, height: 300 }}>
 			<Box p={3}>
-				<Grid container spacing={2}
-					  justify={"space-between"} alignItems={"center"} alignContent={"center"}
+				<Grid
+					container
+					spacing={2}
+					justify={"space-between"}
+					alignItems={"center"}
+					alignContent={"center"}
 				>
 					<Grid item>
 						<Grid container direction={"column"}>
@@ -55,7 +54,7 @@ const ContainerPaper = props =>
 							</Grid>
 						</Grid>
 					</Grid>
-					<Grid item style={{marginLeft: "auto"}}>
+					<Grid item style={{ marginLeft: "auto" }}>
 						<Link to={"/app/containers/" + props.container._id}>
 							<IconButton>
 								<NavigateNextOutlinedIcon />
@@ -66,6 +65,6 @@ const ContainerPaper = props =>
 			</Box>
 		</Paper>
 	);
-}
+};
 
 export default Containers;

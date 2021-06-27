@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { Link, useHistory } from "react-router-dom";
 
@@ -37,7 +37,9 @@ const Profile = (props) => {
 	const anchorRef = useRef(null);
 
 	const handleClose = (event) => {
-		if (anchorRef.current && anchorRef.current.contains(event.target)) return;
+		if (anchorRef && anchorRef.current && (anchorRef as any).current.contains(event.target)) {
+			return;
+		}
 		setOpen(false);
 	};
 
@@ -48,9 +50,9 @@ const Profile = (props) => {
 	return (
 		<>
 			<Box
+				{...({ ref: anchorRef } as any)}
 				p={2}
 				maxWidth={300}
-				ref={anchorRef}
 				display={"flex"}
 				flexWrap={"noWrap"}
 				alignItems={"center"}
