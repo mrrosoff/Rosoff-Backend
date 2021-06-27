@@ -2,7 +2,7 @@ import chai from "chai";
 
 chai.should();
 
-import image from "../../../server/Container/image";
+import image from "../../../server/Container/Image/name";
 
 describe("User/image", () => {
 	describe("image", () => {

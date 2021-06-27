@@ -10,14 +10,45 @@ type User {
 type Container {
 	id: ID!
 	name: String!
-    image: String!
-    imageId: String!
-    created: DateTime!
-    status: ContainerStatus!
+	status: ContainerStatus!
+	createdAt: DateTime!
+    image: Image!
+	hardware: ContainerHardware!
+	networks: [ContainerNetwork]!
 }
 
 enum ContainerStatus {
 	RUNNING
+	STOPPED
+}
+
+type Image {
+	id: ID!
+	name: String!
+}
+
+type ContainerHardware {
+	cpusetCpus: String
+	cpusetMems: String
+	cpuPercent: Int
+	cpuShares: Int
+	cpuPeriod: Int
+	memory: Int
+	memorySwap: Int
+	memoryReservation: Int
+	portBindings: PortBinding
+	privileged: Boolean
+}
+
+type PortBinding {
+	port: String
+}
+
+type ContainerNetwork {
+	name: String
+	gateway: String
+	ipAddress: String
+	macAddress: String
 }
 
 type GoogleLoginReponsePayload {

@@ -1,10 +1,7 @@
 import { Context } from "../index";
+import { Container } from "./index";
 
-interface Parent {
-	Id: string;
-}
-
-const id = async (parent: Parent, args: any, context: Context, info: any) => {
+const id = async (parent: Container, args: any, context: Context, info: any) => {
 	return parent.Id;
 };
 
